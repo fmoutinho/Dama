@@ -5,13 +5,25 @@
  */
 package dama;
 
-import jplay.Sprite;
-
+import JPlay.Sprite;
+import java.awt.Point;
 /**
  *
  * @author VíviannMagaly
  */
-public class peca {
+public class Peca {
     
-   // Sprite pecaJogo = new Sprite();
+   private Sprite pecaJogo = new Sprite("04-damas.png");
+   
+   public Peca(double eixoXini, double eixoYini) {
+       this.pecaJogo.setPosition(eixoXini, eixoYini);
+   }
+   
+   public void draw() {
+       this.pecaJogo.draw();
+   }
+   
+   public void andar(Point p) {
+       this.pecaJogo.setPosition(p);
+   }
 }
