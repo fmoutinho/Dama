@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dama;
+package model;
 
-import JPlay.Sprite;
+import jplay.Sprite;
 import java.awt.Point;
 /**
  *
