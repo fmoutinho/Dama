@@ -5,7 +5,6 @@
  */
 package dama;
 
-import model.Peca;
 import JPlay.GameImage;
 import JPlay.Keyboard;
 import JPlay.Mouse;
