@@ -13,7 +13,7 @@ import java.awt.Point;
  */
 public class Peca {
     
-   private Sprite pecaJogo = new Sprite("04-damas.png");
+   private Sprite pecaJogo = new Sprite("peca_vermelha.png");
    
    public Peca(double eixoXini, double eixoYini) {
        this.pecaJogo.setPosition(eixoXini, eixoYini);

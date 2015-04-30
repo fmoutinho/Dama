@@ -18,9 +18,9 @@ import java.util.logging.Logger;
 public class Dama {
     
     public static void main(String[] args) {
-        // TODO code application logic here/* blablabla*/
-        Window janela = new Window(1080, 768);     
-        Peca peca1 = new Peca(300, 300);             
+        
+        Window janela = new Window(640, 640);     
+        Peca peca1 = new Peca(88, 8);             
         
         TabuleiroLuis tabuleiro = new TabuleiroLuis();
         

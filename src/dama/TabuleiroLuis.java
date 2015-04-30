@@ -12,7 +12,7 @@ public class TabuleiroLuis {
                    casa[x][y] = new Casa("quadrado_preto.png");
                }
 
-               casa[x][y].imagem.setPosition(x * 100, y * 100);
+               casa[x][y].imagem.setPosition(x * 80, y * 80);
                casa[x][y].imagem.draw();
                casa[x][y].setNumero(contador);
 
