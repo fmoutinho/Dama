@@ -15,31 +15,22 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-/**
- *
- * @author Fernando
- */
 public class Dama {
-
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
         // TODO code application logic here/* blablabla*/
         Window janela = new Window(1080, 768);     
         Peca peca1 = new Peca(300, 300);             
-        String nomeArquivoFundo = "tabuleiro.jpg";
         
-        GameImage imagemFundo = new GameImage(nomeArquivoFundo);
+        TabuleiroLuis tabuleiro = new TabuleiroLuis();
+        
         Mouse mouse = janela.getMouse();
         Keyboard teclado = janela.getKeyboard();
         
         boolean executando = true;
         
         while (executando) {
-            
-            imagemFundo.draw();
+           
             peca1.draw();
             janela.display();
             
