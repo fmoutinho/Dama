@@ -14,15 +14,15 @@ import java.awt.Point;
  */
 public class Peca {
 
-    private Sprite spritePeca = new Sprite("peca_vermelha.png");
-    private String sentido;
+    private Sprite spritePeca = new Sprite("peca_vermelha.png", 2);
+    private boolean sentidoSubindo;
     private boolean dama;
 
-    public Peca(double eixoXini, double eixoYini, String sentido, boolean dama) {
+    public Peca(double eixoXini, double eixoYini, boolean sentidoSubindo, boolean dama) {
         this.spritePeca.setPosition(eixoXini, eixoYini);
-        this.sentido = sentido;
+        this.sentidoSubindo = sentidoSubindo;
         this.dama = dama;
-
+        this.spritePeca.setCurrFrame(0);
     }
 
     public void draw() {
@@ -31,12 +31,15 @@ public class Peca {
 
     public void andar(Point p) {
         if (!dama) {
-            if (sentido.equals("Descendo")) {
+            if (!sentidoSubindo) {
                 this.spritePeca.y = this.spritePeca.y + 80;
                 if (p.x < spritePeca.x) {
                     this.spritePeca.x = this.spritePeca.x - 80;
                 } else {
                     this.spritePeca.x = this.spritePeca.x + 80;
+                }
+                if(this.spritePeca.y == 568) { //Casa que ele vira dama
+                    viraDama();
                 }
             } else {
                 this.spritePeca.y = this.spritePeca.y - 80;
@@ -44,10 +47,14 @@ public class Peca {
                     this.spritePeca.x = this.spritePeca.x - 80;
                 } else {
                     this.spritePeca.x = this.spritePeca.x + 80;
-
                 }
             }
         }
+    }
+    
+    private void viraDama() {
+        this.dama = true;
+        this.spritePeca.setCurrFrame(1);        
     }
 
     public JPlay.Point getPosition() {
@@ -71,12 +78,12 @@ public class Peca {
         this.spritePeca = spritePeca;
     }
 
-    public String getSentido() {
-        return sentido;
+    public boolean getSentidoSubindo() {
+        return sentidoSubindo;
     }
 
-    public void setSentido(String sentido) {
-        this.sentido = sentido;
+    public void setSentidoSubindo(boolean sentido) {
+        this.sentidoSubindo = sentido;
     }
 
     public boolean isDama() {

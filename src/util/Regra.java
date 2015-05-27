@@ -15,7 +15,6 @@ import model.Peca;
 public class Regra {
 
     public static boolean podeAndar(Peca peca) {
-
         return true;
     }
 
@@ -24,7 +23,7 @@ public class Regra {
             return damaPodeAndar(pecaSelecionada, position);
 
         } else {
-            if (pecaSelecionada.getSentido().equals("Descendo")) { //Descendo a direita || Descendo a esquerda
+            if (!pecaSelecionada.getSentidoSubindo()) { //Descendo a direita || Descendo a esquerda
                 if ((pecaSelecionada.getPosition().x + 72 <= position.x
                         && position.x <= pecaSelecionada.getPosition().x + 152
                         && pecaSelecionada.getPosition().y + 72 <= position.y
