@@ -48,6 +48,9 @@ public class Peca {
                 } else {
                     this.spritePeca.x = this.spritePeca.x + 80;
                 }
+                if(this.spritePeca.y == 88) {
+                    viraDama();
+                }
             }
         }
     }
