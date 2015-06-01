@@ -14,14 +14,15 @@ import java.awt.Point;
  */
 public class Peca {
 
-    private Sprite spritePeca = new Sprite("peca_vermelha.png", 2);
+    private Sprite spritePeca;
     private boolean sentidoSubindo;
     private boolean dama;
 
-    public Peca(double eixoXini, double eixoYini, boolean sentidoSubindo, boolean dama) {
+    public Peca(double eixoXini, double eixoYini, boolean sentidoSubindo, String imagemFundo) {
         this.spritePeca.setPosition(eixoXini, eixoYini);
         this.sentidoSubindo = sentidoSubindo;
         this.dama = dama;
+        this.spritePeca =  new Sprite(imagemFundo, 2);
         this.spritePeca.setCurrFrame(0);
     }
 
@@ -98,3 +99,5 @@ public class Peca {
     }
 
 }
+
+

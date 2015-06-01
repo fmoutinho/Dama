@@ -34,7 +34,7 @@ public class Dama {
         //A windows SEMPRE deve ser a primeira a ser CARREGADA
         window = new Window(640, 640);
         mouse = window.getMouse();
-        pecaTeste = new Peca(88, 8 , false, false);
+        pecaTeste = new Peca(88, 8 , false, "");
         keyboard = window.getKeyboard();
         imagemFundo = new GameImage("tabuleiro.jpg");
     }
