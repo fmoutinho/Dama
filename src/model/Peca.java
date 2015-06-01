@@ -27,26 +27,27 @@ public class Peca {
 
     public void draw() {
         this.spritePeca.draw();
+        
     }
 
-    public void andar(Point p) {
+    public void andar(Point p, int deslocamento) {
         if (!dama) {
             if (!sentidoSubindo) {
-                this.spritePeca.y = this.spritePeca.y + 80;
+                this.spritePeca.y = this.spritePeca.y + deslocamento;
                 if (p.x < spritePeca.x) {
-                    this.spritePeca.x = this.spritePeca.x - 80;
+                    this.spritePeca.x = this.spritePeca.x - deslocamento;
                 } else {
-                    this.spritePeca.x = this.spritePeca.x + 80;
+                    this.spritePeca.x = this.spritePeca.x + deslocamento;
                 }
                 if(this.spritePeca.y == 568) { //Casa que ele vira dama
                     viraDama();
                 }
             } else {
-                this.spritePeca.y = this.spritePeca.y - 80;
+                this.spritePeca.y = this.spritePeca.y - deslocamento;
                 if (p.x < spritePeca.x) {
-                    this.spritePeca.x = this.spritePeca.x - 80;
+                    this.spritePeca.x = this.spritePeca.x - deslocamento;
                 } else {
-                    this.spritePeca.x = this.spritePeca.x + 80;
+                    this.spritePeca.x = this.spritePeca.x + deslocamento;
                 }
                 if(this.spritePeca.y == 88) {
                     viraDama();
@@ -54,6 +55,33 @@ public class Peca {
             }
         }
     }
+    
+    public void comer(Point p) {
+        if (!dama) {
+            if (!sentidoSubindo) {
+                this.spritePeca.y = this.spritePeca.y + 160;
+                if (p.x < spritePeca.x) {
+                    this.spritePeca.x = this.spritePeca.x - 160;
+                } else {
+                    this.spritePeca.x = this.spritePeca.x + 160;
+                }
+                if(this.spritePeca.y == 568) { //Casa que ele vira dama
+                    viraDama();
+                }
+            } else {
+                this.spritePeca.y = this.spritePeca.y - 160;
+                if (p.x < spritePeca.x) {
+                    this.spritePeca.x = this.spritePeca.x - 160;
+                } else {
+                    this.spritePeca.x = this.spritePeca.x + 160;
+                }
+                if(this.spritePeca.y == 88) {
+                    viraDama();
+                }
+            }
+        }
+    }
+    
     
     private void viraDama() {
         this.dama = true;

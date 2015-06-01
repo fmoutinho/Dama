@@ -17,10 +17,14 @@ public class Dama {
 
     Window window;
     Peca pecaTeste;
+    Peca pecaTesteAzul;
     GameImage imagemFundo;
     Mouse mouse;
     Keyboard keyboard;
     Peca pecaSelecionada;
+    
+    final int DESLOCAMENTO_ANDAR = 80;
+    final int DESLOCAMENTO_COMER = 160;
 
     public Dama() {
 
@@ -35,6 +39,7 @@ public class Dama {
         window = new Window(640, 640);
         mouse = window.getMouse();
         pecaTeste = new Peca(88, 8 , false, false);
+        pecaTesteAzul = new Peca(8, 568 , true, false);
         keyboard = window.getKeyboard();
         imagemFundo = new GameImage("tabuleiro.jpg");
     }
@@ -61,10 +66,13 @@ public class Dama {
                 if (pecaSelecionada != null) {
                     if (Regra.podeAndar(pecaSelecionada , mouse.getPosition())) {
                         System.out.println("1");
-                        pecaSelecionada.andar(mouse.getPosition());     
+                        pecaSelecionada.andar(mouse.getPosition(), DESLOCAMENTO_ANDAR);     
                         desenha();
                         pecaSelecionada = null;
+                    } else if (Regra.podeComer(pecaSelecionada, mouse.getPosition())) {
+                        pecaSelecionada.andar(mouse.getPosition(), DESLOCAMENTO_COMER);
                     }
+                    
                 } else if (existePecaSobMouse(mouse.getPosition())) {
                     System.out.println("2");
                     pecaSelecionada = pecaTeste;
@@ -86,7 +94,7 @@ public class Dama {
             System.out.println("Tem peça");
             return true;
 
-        }
+       }
 
         System.out.println("Nao tem peça");
         return false;
@@ -97,6 +105,7 @@ public class Dama {
 
         imagemFundo.draw();
         pecaTeste.draw();
+        pecaTesteAzul.draw();
         window.display();
     }
 

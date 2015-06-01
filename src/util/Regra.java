@@ -14,6 +14,11 @@ import model.Peca;
  */
 public class Regra {
 
+    
+    public static boolean podeComer(Peca pecaSelecionada, Point position) {
+        return false;
+    }
+    
     public static boolean podeAndar(Peca peca) {
         return true;
     }
