@@ -14,24 +14,15 @@ import java.awt.Point;
  */
 public class Peca {
 
-    private Sprite spritePeca;
+    private Sprite spritePeca = new Sprite("peca_vermelha.png", 2);
     private boolean sentidoSubindo;
     private boolean dama;
-    private String nomeImagem;
 
-    public Peca(double eixoXini, double eixoYini, boolean sentidoSubindo, String imagemPeca) {
+    public Peca(double eixoXini, double eixoYini, boolean sentidoSubindo, boolean dama) {
         this.spritePeca.setPosition(eixoXini, eixoYini);
         this.sentidoSubindo = sentidoSubindo;
-        this.spritePeca = new Sprite(imagemPeca, 2);
-        this.spritePeca.setCurrFrame(0);         
-    }    
-    
-    public String getNomeImagem() {
-        return nomeImagem;
-    }
-
-    public void setNomeImagem(String nomeImagem) {
-        this.nomeImagem = nomeImagem;
+        this.dama = dama;
+        this.spritePeca.setCurrFrame(0);
     }
 
     public void draw() {
@@ -46,7 +37,7 @@ public class Peca {
                     this.spritePeca.x = this.spritePeca.x - 80;
                 } else {
                     this.spritePeca.x = this.spritePeca.x + 80;
-                }  
+                }
                 if(this.spritePeca.y == 568) { //Casa que ele vira dama
                     viraDama();
                 }
@@ -56,7 +47,7 @@ public class Peca {
                     this.spritePeca.x = this.spritePeca.x - 80;
                 } else {
                     this.spritePeca.x = this.spritePeca.x + 80;
-                }  
+                }
                 if(this.spritePeca.y == 88) {
                     viraDama();
                 }

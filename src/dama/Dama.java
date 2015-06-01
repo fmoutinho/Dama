@@ -10,7 +10,6 @@ import JPlay.Keyboard;
 import JPlay.Mouse;
 import JPlay.Window;
 import java.awt.Point;
-import model.Jogador;
 import model.Peca;
 import util.Regra;
 
@@ -35,9 +34,7 @@ public class Dama {
         //A windows SEMPRE deve ser a primeira a ser CARREGADA
         window = new Window(640, 640);
         mouse = window.getMouse();
-        Jogador jogador1 = new Jogador(true);
-        Jogador jogador2 = new Jogador(false);
-        
+        pecaTeste = new Peca(88, 8 , false, false);
         keyboard = window.getKeyboard();
         imagemFundo = new GameImage("tabuleiro.jpg");
     }
