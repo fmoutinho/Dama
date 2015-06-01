@@ -10,13 +10,15 @@ import JPlay.Keyboard;
 import JPlay.Mouse;
 import JPlay.Window;
 import java.awt.Point;
+import model.Jogador;
 import model.Peca;
 import util.Regra;
 
 public class Dama {
 
     Window window;
-    Peca pecaTeste;
+    Jogador jogador1;
+    Jogador jogador2;
     GameImage imagemFundo;
     Mouse mouse;
     Keyboard keyboard;
@@ -34,7 +36,8 @@ public class Dama {
         //A windows SEMPRE deve ser a primeira a ser CARREGADA
         window = new Window(640, 640);
         mouse = window.getMouse();
-        pecaTeste = new Peca(88, 8 , false, "");
+        jogador1 = new Jogador(true);
+        jogador2 = new Jogador(false);
         keyboard = window.getKeyboard();
         imagemFundo = new GameImage("tabuleiro.jpg");
     }
@@ -42,7 +45,8 @@ public class Dama {
     private void descarregarObjetos() {
 
         mouse = null;
-        pecaTeste = null;
+        jogador1 = null;
+        jogador2 = null;
         keyboard = null;
         imagemFundo = null;
 
@@ -65,10 +69,11 @@ public class Dama {
                         desenha();
                         pecaSelecionada = null;
                     }
-                } else if (existePecaSobMouse(mouse.getPosition())) {
+                } else {
                     System.out.println("2");
-                    pecaSelecionada = pecaTeste;
+                    pecaSelecionada = jogador1.existePecaSobMouse(mouse.getPosition());
                 }
+                
             }
 
             if (keyboard.keyDown(Keyboard.ESCAPE_KEY) == true) {
@@ -77,7 +82,7 @@ public class Dama {
         }
     }
 
-    private boolean existePecaSobMouse(Point position) {
+    /*private boolean existePecaSobMouse(Point position) {
 
         if ((position.getX() >= pecaTeste.getPosition().x)
                 && (position.getX() <= pecaTeste.getPosition().x + pecaTeste.getWidth())
@@ -91,12 +96,12 @@ public class Dama {
         System.out.println("Nao tem peça");
         return false;
 
-    }
+    }*/
 
     private void desenha() {
-
         imagemFundo.draw();
-        pecaTeste.draw();
+        jogador1.desenhaPecas();
+        jogador2.desenhaPecas();
         window.display();
     }
 

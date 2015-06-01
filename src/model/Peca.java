@@ -19,10 +19,9 @@ public class Peca {
     private boolean dama;
 
     public Peca(double eixoXini, double eixoYini, boolean sentidoSubindo, String imagemFundo) {
-        this.spritePeca.setPosition(eixoXini, eixoYini);
-        this.sentidoSubindo = sentidoSubindo;
-        this.dama = dama;
         this.spritePeca =  new Sprite(imagemFundo, 2);
+        this.spritePeca.setPosition(eixoXini, eixoYini);
+        this.sentidoSubindo = sentidoSubindo;        
         this.spritePeca.setCurrFrame(0);
     }
 
