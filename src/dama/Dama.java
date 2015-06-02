@@ -61,7 +61,9 @@ public class Dama {
             desenha();
             
             if (mouse.isLeftButtonPressed() == true) {
-
+                
+                pecaSelecionada = jogador2.existePecaSobMouse(mouse.getPosition());
+                
                 if (pecaSelecionada != null) {
                     if (Regra.podeAndar(pecaSelecionada , mouse.getPosition())) {
                         System.out.println("1");
@@ -70,10 +72,8 @@ public class Dama {
                         pecaSelecionada = null;
                     }
                 } else {
-                    System.out.println("2");
-                    pecaSelecionada = jogador1.existePecaSobMouse(mouse.getPosition());
-                }
-                
+                    System.out.println("2");                    
+                }                
             }
 
             if (keyboard.keyDown(Keyboard.ESCAPE_KEY) == true) {

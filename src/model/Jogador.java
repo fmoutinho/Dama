@@ -7,6 +7,7 @@ package model;
 
 import java.awt.Point;
 
+
 /**
  *
  * @author VíviannMagaly
@@ -93,13 +94,20 @@ public class Jogador {
 
     //Mesmo método que já existia porém rodando para todas as pecas.
     public Peca existePecaSobMouse(Point position) {
-        for (Peca peca : pecas) {
-            if ((position.getX() >= peca.getPosition().x)
-                    && (position.getX() <= peca.getPosition().x + peca.getWidth())
-                    && (position.getY() >= peca.getPosition().y)
-                    && (position.getY() <= peca.getPosition().y + peca.getHeight())) {
+        for (Peca p : pecas) {
+            System.out.println("Mouse X: " + position.getX());
+            System.out.println("Peça X: " + p.getPosition().x);
+            System.out.println("Peça X + W: " + p.getPosition().x + p.getWidth());
+            System.out.println("Mouse Y: " + position.getY());
+            System.out.println("Peça Y: " + p.getPosition().y);
+            System.out.println("Peça Y + H: " + p.getPosition().y + p.getHeight());
+            
+            if ((position.getX() >= p.getPosition().x)
+                    && (position.getX() <= p.getPosition().x + p.getWidth())
+                    && (position.getY() >= p.getPosition().y)
+                    && (position.getY() <= p.getPosition().y + p.getHeight())) {
 
-                return peca;
+                return p;
             }
         }
         return null;
