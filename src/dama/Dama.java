@@ -56,34 +56,36 @@ public class Dama {
 
     private void loop() {
         boolean executando = true;
+        boolean esperandoMovimento;
         
         while (executando) {
+            
+            esperandoMovimento = true;
             desenha();
-            boolean esperandoMovimento = true;
+            
             if (mouse.isLeftButtonPressed() == true) {
                 
                 pecaSelecionada = jogador2.existePecaSobMouse(mouse.getPosition());
                 
                 if (pecaSelecionada != null) {
-                    //if (Regra.podeAndar(pecaSelecionada , mouse.getPosition())) {
-                        System.out.println("Fazer o movimento de andar");
-                        while (esperandoMovimento) {
-                            if (mouse.isLeftButtonPressed() == true) {
-                                if (Regra.podeAndar(pecaSelecionada , mouse.getPosition())) {
-                                    System.out.println("A peca pode andar");
-                                    pecaSelecionada.andar(mouse.getPosition());     
-                                    desenha();
-                                    pecaSelecionada = null;
-                                } else {
-                                    System.out.println("A peca nao pode andar");
-                                }    
-                                esperandoMovimento = false;
-                            }
+                    System.out.println("Fazer o movimento de andar");
+                    while (esperandoMovimento) {
+                        if (mouse.isLeftButtonPressed() == true) {
+                            if (Regra.podeAndar(pecaSelecionada , mouse.getPosition())) {
+                                System.out.println("A peca " + pecaSelecionada.getId() + " pode andar");
+                                pecaSelecionada.andar(mouse.getPosition());     
+                                desenha();
+                                pecaSelecionada = null;
+                            } else {
+                                System.out.println("A peca " + pecaSelecionada.getId() + " nao pode andar" );
+                               }    
+                            esperandoMovimento = false;
                         }
+                    }
                     
                 } else {
                     System.out.println("Nenhuma peca selecionada");                    
-                  }                
+                }                
             }
 
             if (keyboard.keyDown(Keyboard.ESCAPE_KEY) == true) {

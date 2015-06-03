@@ -106,11 +106,10 @@ public class Jogador {
                     && (mousePosition.getX() <= p.getPosition().x + p.getWidth())
                     && (mousePosition.getY() >= p.getPosition().y)
                     && (mousePosition.getY() <= p.getPosition().y + p.getHeight())) {
-                System.out.println("Peca Selecionada");
+                System.out.println("Peca " + p.getId() + " Selecionada");
                 return p;
             }
         }
-        System.out.println("Nenhuma peca selecionada");
         return null;
     }
 

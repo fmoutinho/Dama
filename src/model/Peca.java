@@ -17,12 +17,24 @@ public class Peca {
     private Sprite spritePeca;
     private boolean sentidoSubindo;
     private boolean dama;
+    private int id;
+    static private int contador;
+    
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public Peca(double eixoXini, double eixoYini, boolean sentidoSubindo, String imagemFundo) {
         this.spritePeca =  new Sprite(imagemFundo, 2);
         this.spritePeca.setPosition(eixoXini, eixoYini);
         this.sentidoSubindo = sentidoSubindo;        
         this.spritePeca.setCurrFrame(0);
+        Peca.contador += 1;
+        this.id = Peca.contador;
     }
 
     public void draw() {
