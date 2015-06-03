@@ -93,10 +93,8 @@ public class Dama {
                                 System.out.println("A peca " + pecaSelecionada.getId() + " nao pode andar");
                             }
                             esperandoMovimento = false;
-
                         }
                     }
-
                 } else {
                     System.out.println("Nenhuma peca selecionada");
                 }
