@@ -93,23 +93,24 @@ public class Jogador {
     }
 
     //Mesmo método que já existia porém rodando para todas as pecas.
-    public Peca existePecaSobMouse(Point position) {
+    public Peca existePecaSobMouse(Point mousePosition) {
         for (Peca p : pecas) {
-            System.out.println("Mouse X: " + position.getX());
+            /*System.out.println("Mouse X: " + mousePosition.getX());
             System.out.println("Peça X: " + p.getPosition().x);
             System.out.println("Peça X + W: " + p.getPosition().x + p.getWidth());
-            System.out.println("Mouse Y: " + position.getY());
+            System.out.println("Mouse Y: " + mousePosition.getY());
             System.out.println("Peça Y: " + p.getPosition().y);
-            System.out.println("Peça Y + H: " + p.getPosition().y + p.getHeight());
+            System.out.println("Peça Y + H: " + p.getPosition().y + p.getHeight());*/
             
-            if ((position.getX() >= p.getPosition().x)
-                    && (position.getX() <= p.getPosition().x + p.getWidth())
-                    && (position.getY() >= p.getPosition().y)
-                    && (position.getY() <= p.getPosition().y + p.getHeight())) {
-
+            if ((mousePosition.getX() >= p.getPosition().x)
+                    && (mousePosition.getX() <= p.getPosition().x + p.getWidth())
+                    && (mousePosition.getY() >= p.getPosition().y)
+                    && (mousePosition.getY() <= p.getPosition().y + p.getHeight())) {
+                System.out.println("Peca Selecionada");
                 return p;
             }
         }
+        System.out.println("Nenhuma peca selecionada");
         return null;
     }
 

@@ -18,7 +18,7 @@ public class Regra {
         return true;
     }
 
-    public static boolean podeAndar(Peca pecaSelecionada, Point position) {
+   public static boolean podeAndar(Peca pecaSelecionada, Point position) {
         if (pecaSelecionada.isDama()) {
             return damaPodeAndar(pecaSelecionada, position);
 
