@@ -29,7 +29,7 @@ public class Peca {
     }
 
     public Peca(double eixoXini, double eixoYini, boolean sentidoSubindo, String imagemFundo) {
-        this.spritePeca =  new Sprite(imagemFundo, 2);
+        this.spritePeca =  new Sprite(imagemFundo, 3);
         this.spritePeca.setPosition(eixoXini, eixoYini);
         this.sentidoSubindo = sentidoSubindo;        
         this.spritePeca.setCurrFrame(0);
@@ -109,6 +109,14 @@ public class Peca {
         this.dama = dama;
     }
 
+    public void selecionaPeca() {
+        System.out.println("Mudando frame da peça: " + this.id);
+        this.spritePeca.setCurrFrame(2);        
+    }
+    
+    public void deselecionaPeca() {
+        this.spritePeca.setCurrFrame(0);
+    }
 }
 
 

@@ -7,7 +7,6 @@ package model;
 
 import java.awt.Point;
 
-
 /**
  *
  * @author VíviannMagaly
@@ -20,8 +19,13 @@ public class Jogador {
         InstanciaPecas();
     }
 
+    private Peca ultimaPecaClicada;
     private Peca[] pecas = new Peca[12];
     private boolean sentidoSubindo;
+
+    public Peca getUltimaPecaClicada() {
+        return ultimaPecaClicada;
+    }
 
     public boolean isSentidoSubindo() {
         return sentidoSubindo;
@@ -93,24 +97,27 @@ public class Jogador {
     }
 
     //Mesmo método que já existia porém rodando para todas as pecas.
-    public Peca existePecaSobMouse(Point mousePosition) {
+    public boolean existePecaSobMouse(Point mousePosition) {
         for (Peca p : pecas) {
             /*System.out.println("Mouse X: " + mousePosition.getX());
-            System.out.println("Peça X: " + p.getPosition().x);
-            System.out.println("Peça X + W: " + p.getPosition().x + p.getWidth());
-            System.out.println("Mouse Y: " + mousePosition.getY());
-            System.out.println("Peça Y: " + p.getPosition().y);
-            System.out.println("Peça Y + H: " + p.getPosition().y + p.getHeight());*/
-            
+             System.out.println("Peça X: " + p.getPosition().x);
+             System.out.println("Peça X + W: " + p.getPosition().x + p.getWidth());
+             System.out.println("Mouse Y: " + mousePosition.getY());
+             System.out.println("Peça Y: " + p.getPosition().y);
+             System.out.println("Peça Y + H: " + p.getPosition().y + p.getHeight());*/
+
             if ((mousePosition.getX() >= p.getPosition().x)
                     && (mousePosition.getX() <= p.getPosition().x + p.getWidth())
                     && (mousePosition.getY() >= p.getPosition().y)
                     && (mousePosition.getY() <= p.getPosition().y + p.getHeight())) {
                 System.out.println("Peca " + p.getId() + " Selecionada");
-                return p;
+                p.selecionaPeca();
+                //p.getSpritePeca().setPosition(0, 0);
+                this.ultimaPecaClicada = p;                
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     public void desenhaPecas() {
