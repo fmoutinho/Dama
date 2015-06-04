@@ -39,7 +39,15 @@ public class Jogador {
     public Peca getUltimaPecaClicada() {
         return ultimaPecaClicada;
     }
-
+    
+    private void setUltimaPecaClicada(Peca peca) {
+        if(this.ultimaPecaClicada != null) {
+            this.ultimaPecaClicada.deselecionaPeca();
+        }
+        this.ultimaPecaClicada = peca;
+        this.ultimaPecaClicada.selecionaPeca();
+    }
+    
     public boolean isSentidoSubindo() {
         return sentidoSubindo;
     }
@@ -112,21 +120,13 @@ public class Jogador {
     //Mesmo método que já existia porém rodando para todas as pecas.
     public boolean existePecaSobMouse(Point mousePosition) {
         for (Peca p : pecas) {
-            /*System.out.println("Mouse X: " + mousePosition.getX());
-             System.out.println("Peça X: " + p.getPosition().x);
-             System.out.println("Peça X + W: " + p.getPosition().x + p.getWidth());
-             System.out.println("Mouse Y: " + mousePosition.getY());
-             System.out.println("Peça Y: " + p.getPosition().y);
-             System.out.println("Peça Y + H: " + p.getPosition().y + p.getHeight());*/
 
             if ((mousePosition.getX() >= p.getPosition().x)
                     && (mousePosition.getX() <= p.getPosition().x + p.getWidth())
                     && (mousePosition.getY() >= p.getPosition().y)
                     && (mousePosition.getY() <= p.getPosition().y + p.getHeight())) {
                 System.out.println("Peca " + p.getId() + " Selecionada");
-                p.selecionaPeca();
-                //p.getSpritePeca().setPosition(0, 0);
-                this.ultimaPecaClicada = p;                
+                setUltimaPecaClicada(p);                
                 return true;
             }
         }

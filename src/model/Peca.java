@@ -19,7 +19,7 @@ public class Peca {
     private boolean dama;
     private int id;
     static private int contador;
-    
+
     public void setId(int id) {
         this.id = id;
     }
@@ -29,9 +29,9 @@ public class Peca {
     }
 
     public Peca(double eixoXini, double eixoYini, boolean sentidoSubindo, String imagemFundo) {
-        this.spritePeca =  new Sprite(imagemFundo, 3);
+        this.spritePeca = new Sprite(imagemFundo, 4);
         this.spritePeca.setPosition(eixoXini, eixoYini);
-        this.sentidoSubindo = sentidoSubindo;        
+        this.sentidoSubindo = sentidoSubindo;
         this.spritePeca.setCurrFrame(0);
         Peca.contador += 1;
         this.id = Peca.contador;
@@ -47,29 +47,33 @@ public class Peca {
                 this.spritePeca.y = this.spritePeca.y + DESLOCAMENTO;
                 if (p.x < spritePeca.x) {
                     this.spritePeca.x = this.spritePeca.x - DESLOCAMENTO;
+                    this.deselecionaPeca();
                 } else {
                     this.spritePeca.x = this.spritePeca.x + DESLOCAMENTO;
+                    this.deselecionaPeca();
                 }
-                if(this.spritePeca.y == 568) { //Casa que ele vira dama
+                if (this.spritePeca.y == 568) { //Casa que ele vira dama
                     viraDama();
                 }
             } else {
                 this.spritePeca.y = this.spritePeca.y - DESLOCAMENTO;
                 if (p.x < spritePeca.x) {
                     this.spritePeca.x = this.spritePeca.x - DESLOCAMENTO;
+                    this.deselecionaPeca();
                 } else {
                     this.spritePeca.x = this.spritePeca.x + DESLOCAMENTO;
+                    this.deselecionaPeca();
                 }
-                if(this.spritePeca.y == 88) {
+                if (this.spritePeca.y == 88) {
                     viraDama();
                 }
             }
         }
     }
-    
+
     private void viraDama() {
         this.dama = true;
-        this.spritePeca.setCurrFrame(1);        
+        this.spritePeca.setCurrFrame(1);
     }
 
     public JPlay.Point getPosition() {
@@ -110,13 +114,18 @@ public class Peca {
     }
 
     public void selecionaPeca() {
-        System.out.println("Mudando frame da peça: " + this.id);
-        this.spritePeca.setCurrFrame(2);        
+        if (this.dama) {
+            this.spritePeca.setCurrFrame(3);
+        } else {
+            this.spritePeca.setCurrFrame(2);
+        }
     }
-    
+
     public void deselecionaPeca() {
-        this.spritePeca.setCurrFrame(0);
+        if (this.dama) {
+            this.spritePeca.setCurrFrame(1);
+        } else {
+            this.spritePeca.setCurrFrame(0);
+        }
     }
 }
-
-

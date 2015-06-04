@@ -69,8 +69,7 @@ public class Dama {
                 //Seleciona a peça que o jogador clicou
                 if (partida.jogadorDaVez().existePecaSobMouse(mouse.getPosition())) {
                     pecaSelecionada = partida.jogadorDaVez().getUltimaPecaClicada();
-                    desenha();
-                    
+                    desenha();                    
                 }
 
                 //Se houver peça selecionada, espera o movimento
@@ -83,17 +82,14 @@ public class Dama {
                             
                             //Se, em vez de fazer o movimento, decidiu escolher outra peça
                             
-                            if (partida.jogadorDaVez().existePecaSobMouse(mouse.getPosition())) {
-                                pecaSelecionada.deselecionaPeca();
-                                desenha();
+                            if (partida.jogadorDaVez().existePecaSobMouse(mouse.getPosition())) {                              
                                 pecaSelecionada = partida.jogadorDaVez().getUltimaPecaClicada();
-                                
-                                
+                                desenha();
+                                                                
                             } else //Se não selecionou outra peça, então verifica se pode andar
                                 if (Regra.podeAndar(pecaSelecionada, mouse.getPosition(), partida.getJogadorVermelho().getPecas())) {
                                     System.out.println("A peca " + pecaSelecionada.getId() + " andou");
                                     pecaSelecionada.movimentar(mouse.getPosition(), DESLOCAMENTO_ANDAR);
-                                    pecaSelecionada.deselecionaPeca();
                                     desenha();
                                     pecaSelecionada = null;
                                     partida.trocaDeTurno();
