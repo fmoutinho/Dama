@@ -64,7 +64,7 @@ public class Peca {
                     this.spritePeca.x = this.spritePeca.x + DESLOCAMENTO;
                     this.deselecionaPeca();
                 }
-                if (this.spritePeca.y == 88) {
+                if (this.spritePeca.y == 8) {
                     viraDama();
                 }
             }
