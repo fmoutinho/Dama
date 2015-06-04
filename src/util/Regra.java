@@ -33,8 +33,10 @@ public class Regra {
                         && pecaSelecionada.getPosition().y + 72 <= position.y
                         && position.y <= pecaSelecionada.getPosition().y + 152))
                     {
-                    return true;
-                }
+                        return naoHaPecaAdversariaNaFrente(position, pecasAdversario);
+                        
+                        
+                }        
             } else {//Subindo a esquerda || Subindo a direita
                 if ((pecaSelecionada.getPosition().x - 88 <= position.x
                         && position.x <= pecaSelecionada.getPosition().x - 8
@@ -44,7 +46,8 @@ public class Regra {
                         && position.y <= pecaSelecionada.getPosition().y - 8
                         && pecaSelecionada.getPosition().x + 72 <= position.x
                         && position.x <= pecaSelecionada.getPosition().x + 152)) {
-                    return true;
+                        
+                        return naoHaPecaAdversariaNaFrente(position, pecasAdversario);  
 
                 }
             }
@@ -55,10 +58,10 @@ public class Regra {
     public static boolean naoHaPecaAdversariaNaFrente(Point mousePosition, Peca[] pecasAdversario) {
         
         for (Peca pecaAdversaria : pecasAdversario) {
-            if ((mousePosition.getX() == pecaAdversaria.getPosition().x)
-                    && (mousePosition.getX() == pecaAdversaria.getPosition().x + pecaAdversaria.getWidth())
-                    && (mousePosition.getY() == pecaAdversaria.getPosition().y)
-                    && (mousePosition.getY() == pecaAdversaria.getPosition().y + pecaAdversaria.getHeight())) {
+            if ((mousePosition.getX() >= pecaAdversaria.getPosition().x)
+                    && (mousePosition.getX() <= pecaAdversaria.getPosition().x + pecaAdversaria.getWidth())
+                    && (mousePosition.getY() >= pecaAdversaria.getPosition().y)
+                    && (mousePosition.getY() <= pecaAdversaria.getPosition().y + pecaAdversaria.getHeight())) {
                 return false;
             }
         }

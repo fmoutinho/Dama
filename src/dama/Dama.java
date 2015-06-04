@@ -57,7 +57,7 @@ public class Dama {
     private void loop() {
         boolean executando = true;
         boolean esperandoMovimento;
-
+        Jogador jogadorAdversario = null;
         while (executando) {
 
             esperandoMovimento = true;
@@ -85,9 +85,16 @@ public class Dama {
                             if (partida.jogadorDaVez().existePecaSobMouse(mouse.getPosition())) {                              
                                 pecaSelecionada = partida.jogadorDaVez().getUltimaPecaClicada();
                                 desenha();
-                                                                
-                            } else //Se não selecionou outra peça, então verifica se pode andar
-                                if (Regra.podeAndar(pecaSelecionada, mouse.getPosition(), partida.getJogadorVermelho().getPecas())) {
+                            
+                            //Se não selecionou outra peça, então verifica se pode andar                                    
+                            } else 
+                                if ("Vermelho".equals(partida.jogadorDaVez().getCor())) {
+                                    jogadorAdversario = partida.getJogadorAzul();
+                                }
+                                else {
+                                    jogadorAdversario = partida.getJogadorVermelho();
+                                }
+                                if (Regra.podeAndar(pecaSelecionada, mouse.getPosition(), jogadorAdversario.getPecas())) {
                                     System.out.println("A peca " + pecaSelecionada.getId() + " andou");
                                     pecaSelecionada.movimentar(mouse.getPosition(), DESLOCAMENTO_ANDAR);
                                     desenha();
