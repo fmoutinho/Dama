@@ -41,7 +41,7 @@ public class Regra {
                         && pecaSelecionada.getPosition().y - 88 <= position.y
                         && position.y <= pecaSelecionada.getPosition().y - 8)
                         || (pecaSelecionada.getPosition().y - 88 <= position.y
-                        && position.x <= pecaSelecionada.getPosition().x - 8
+                        && position.y <= pecaSelecionada.getPosition().y - 8
                         && pecaSelecionada.getPosition().x + 72 <= position.x
                         && position.x <= pecaSelecionada.getPosition().x + 152)) {
                     return true;
