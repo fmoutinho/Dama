@@ -18,7 +18,7 @@ public class Regra {
         return true;
     }
 
-   public static boolean podeAndar(Peca pecaSelecionada, Point position) {
+   public static boolean podeAndar(Peca pecaSelecionada, Point position, Peca[] pecasAdversario) {
         if (pecaSelecionada.isDama()) {
             return damaPodeAndar(pecaSelecionada, position);
 
@@ -31,7 +31,8 @@ public class Regra {
                         || (pecaSelecionada.getPosition().x - 88 <= position.x
                         && position.x <= pecaSelecionada.getPosition().x - 8
                         && pecaSelecionada.getPosition().y + 72 <= position.y
-                        && position.y <= pecaSelecionada.getPosition().y + 152)) {
+                        && position.y <= pecaSelecionada.getPosition().y + 152))
+                    {
                     return true;
                 }
             } else {//Subindo a esquerda || Subindo a direita
@@ -50,6 +51,24 @@ public class Regra {
             return false;
         }
     }
+   
+    public static boolean naoHaPecaAdversariaNaFrente(Point mousePosition, Peca[] pecasAdversario) {
+        
+        for (Peca pecaAdversaria : pecasAdversario) {
+            if ((mousePosition.getX() == pecaAdversaria.getPosition().x)
+                    && (mousePosition.getX() == pecaAdversaria.getPosition().x + pecaAdversaria.getWidth())
+                    && (mousePosition.getY() == pecaAdversaria.getPosition().y)
+                    && (mousePosition.getY() == pecaAdversaria.getPosition().y + pecaAdversaria.getHeight())) {
+                return false;
+            }
+        }
+        return true;
+    }
+    /*public static boolean podeComer(Peca pecaSelecionada, Point position, Peca[] pecasAdversario) {
+        for (for (Peca p : pecas)) {
+            return true;
+        }
+    }*/
 
     private static boolean damaPodeAndar(Peca pecaSelecionada, Point position) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

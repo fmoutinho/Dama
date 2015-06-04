@@ -15,14 +15,27 @@ public class Jogador {
 
     public Jogador(boolean sentidoSubindo) {
         this.sentidoSubindo = sentidoSubindo;
-
+        if (sentidoSubindo) {
+            this.cor = "Vermelho";
+        } else {
+            this.cor = "Azul";
+        } 
         InstanciaPecas();
     }
 
     private Peca ultimaPecaClicada;
     private Peca[] pecas = new Peca[12];
     private boolean sentidoSubindo;
+    private String cor;
 
+    public String getCor() {
+        return cor;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+    
     public Peca getUltimaPecaClicada() {
         return ultimaPecaClicada;
     }

@@ -23,7 +23,9 @@ public class Dama {
     Mouse mouse;
     Keyboard keyboard;
     Peca pecaSelecionada;
-
+    final int DESLOCAMENTO_ANDAR = 80;
+    final int DESLOCAMENTO_COMER = 160;
+    
     public Dama() {
 
         System.out.println("rodando");
@@ -67,6 +69,8 @@ public class Dama {
                 //Seleciona a peça que o jogador clicou
                 if (partida.jogadorDaVez().existePecaSobMouse(mouse.getPosition())) {
                     pecaSelecionada = partida.jogadorDaVez().getUltimaPecaClicada();
+                    desenha();
+                    
                 }
 
                 //Se houver peça selecionada, espera o movimento
@@ -78,20 +82,26 @@ public class Dama {
                         if (mouse.isLeftButtonPressed() == true) {
                             
                             //Se, em vez de fazer o movimento, decidiu escolher outra peça
+                            
                             if (partida.jogadorDaVez().existePecaSobMouse(mouse.getPosition())) {
                                 pecaSelecionada.deselecionaPeca();
-                                pecaSelecionada = partida.jogadorDaVez().getUltimaPecaClicada();
-                            } else //Se não selecionou outra peça, então verifica se pode andar
-                                if (Regra.podeAndar(pecaSelecionada, mouse.getPosition())) {
-                                System.out.println("A peca " + pecaSelecionada.getId() + " pode andar");
-                                pecaSelecionada.andar(mouse.getPosition());
                                 desenha();
-                                pecaSelecionada.deselecionaPeca();
-                                pecaSelecionada = null;
-                                partida.trocaDeTurno();
-                            } else {
+                                pecaSelecionada = partida.jogadorDaVez().getUltimaPecaClicada();
+                                
+                                
+                            } else //Se não selecionou outra peça, então verifica se pode andar
+                                if (Regra.podeAndar(pecaSelecionada, mouse.getPosition(), partida.getJogadorVermelho().getPecas())) {
+                                    System.out.println("A peca " + pecaSelecionada.getId() + " andou");
+                                    pecaSelecionada.movimentar(mouse.getPosition(), DESLOCAMENTO_ANDAR);
+                                    pecaSelecionada.deselecionaPeca();
+                                    desenha();
+                                    pecaSelecionada = null;
+                                    partida.trocaDeTurno();
+                                    System.out.println("Vez do jogador " + partida.jogadorDaVez().getCor());
+                                    
+                                } else {
                                 System.out.println("A peca " + pecaSelecionada.getId() + " nao pode andar");
-                            }
+                                }
                             esperandoMovimento = false;
                         }
                     }

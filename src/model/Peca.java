@@ -41,24 +41,24 @@ public class Peca {
         this.spritePeca.draw();
     }
 
-    public void andar(Point p) {
+    public void movimentar(Point p, int DESLOCAMENTO) {
         if (!dama) {
             if (!sentidoSubindo) {
-                this.spritePeca.y = this.spritePeca.y + 80;
+                this.spritePeca.y = this.spritePeca.y + DESLOCAMENTO;
                 if (p.x < spritePeca.x) {
-                    this.spritePeca.x = this.spritePeca.x - 80;
+                    this.spritePeca.x = this.spritePeca.x - DESLOCAMENTO;
                 } else {
-                    this.spritePeca.x = this.spritePeca.x + 80;
+                    this.spritePeca.x = this.spritePeca.x + DESLOCAMENTO;
                 }
                 if(this.spritePeca.y == 568) { //Casa que ele vira dama
                     viraDama();
                 }
             } else {
-                this.spritePeca.y = this.spritePeca.y - 80;
+                this.spritePeca.y = this.spritePeca.y - DESLOCAMENTO;
                 if (p.x < spritePeca.x) {
-                    this.spritePeca.x = this.spritePeca.x - 80;
+                    this.spritePeca.x = this.spritePeca.x - DESLOCAMENTO;
                 } else {
-                    this.spritePeca.x = this.spritePeca.x + 80;
+                    this.spritePeca.x = this.spritePeca.x + DESLOCAMENTO;
                 }
                 if(this.spritePeca.y == 88) {
                     viraDama();

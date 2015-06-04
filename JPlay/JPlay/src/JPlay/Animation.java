@@ -137,7 +137,7 @@ public class Animation extends GameImage
 
     public void setCurrFrame(int frame)
     {
-            currAnimFrame = frame;
+          this.currAnimFrame = frame;
     }
 
     public int getCurrFrame()
