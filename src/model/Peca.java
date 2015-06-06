@@ -53,7 +53,7 @@ public class Peca {
                     this.spritePeca.x = this.spritePeca.x + DESLOCAMENTO;
                     this.deselecionaPeca();
                 }
-                if (this.spritePeca.y == Constantes.Y_DAMA_DESCENDO) { //Casa que ele vira dama
+                if (this.spritePeca.y == Constantes.Y_INICIAL_SUBINDO) { //Casa que ele vira dama
                     viraDama();
                 }
             } else {
@@ -65,7 +65,7 @@ public class Peca {
                     this.spritePeca.x = this.spritePeca.x + DESLOCAMENTO;
                     this.deselecionaPeca();
                 }
-                if (this.spritePeca.y == Constantes.Y_DAMA_SUBINDO) {
+                if (this.spritePeca.y == Constantes.Y_INICIAL_DESCENDO) {
                     viraDama();
                 }
             }

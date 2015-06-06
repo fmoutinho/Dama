@@ -6,6 +6,7 @@
 package model;
 
 import java.awt.Point;
+import util.Constantes;
 
 /**
  *
@@ -75,11 +76,11 @@ public class Jogador {
         int lenght = 0;
 
         if (this.sentidoSubindo) {
-            y = 568;
+            y = Constantes.Y_INICIAL_SUBINDO;
 
             //roda apenas 3 vezes para preencher o x
             for (int i = 1; i <= 3; i++) {
-                x = 8;
+                x = Constantes.X_INICIAL_SUBINDO;
 
                 if (i == 2) {
                     x += 80;
@@ -92,19 +93,19 @@ public class Jogador {
                     this.pecas[lenght] = novaPeca;
                     lenght++;
 
-                    x += 160;
+                    x += 2 * Constantes.DESLOCAMENTO_ANDAR;
                 }
-                y -= 80;
+                y -= Constantes.DESLOCAMENTO_ANDAR;
             }
         } else {
-            y = 8;
+            y = Constantes.Y_INICIAL_DESCENDO;
 
             //roda apenas 3 vezes para preencher o x
             for (int i = 1; i <= 3; i++) {
-                x = 8;
+                x = Constantes.X_INICIAL_DESCENDO;
 
                 if (i == 1 || i == 3) {
-                    x += 80;
+                    x += Constantes.DESLOCAMENTO_ANDAR;
                 }
 
                 //roda apenas 4 vezes para preencher o y
@@ -114,9 +115,9 @@ public class Jogador {
                     this.pecas[lenght] = novaPeca;
                     lenght++;
 
-                    x += 160;
+                    x += 2 * Constantes.DESLOCAMENTO_ANDAR;
                 }
-                y += 80;
+                y += Constantes.DESLOCAMENTO_ANDAR;
             }
         }
     }
