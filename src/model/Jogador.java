@@ -13,20 +13,24 @@ import java.awt.Point;
  */
 public class Jogador {
 
-    public Jogador(boolean sentidoSubindo) {
-        this.sentidoSubindo = sentidoSubindo;
-        if (sentidoSubindo) {
-            this.cor = "Vermelho";
-        } else {
-            this.cor = "Azul";
-        } 
-        InstanciaPecas();
-    }
-
     private Peca ultimaPecaClicada;
     private Peca[] pecas = new Peca[12];
     private boolean sentidoSubindo;
     private String cor;
+    private boolean jogadorDaVez;
+
+    public Jogador(boolean sentidoSubindo) {
+        this.sentidoSubindo = sentidoSubindo;
+        if (sentidoSubindo) {
+            this.cor = "Vermelho";
+            this.jogadorDaVez = sentidoSubindo;
+        } else {
+            this.cor = "Azul";
+            this.jogadorDaVez = sentidoSubindo;
+
+        }
+        InstanciaPecas();
+    }
 
     public String getCor() {
         return cor;
@@ -35,19 +39,19 @@ public class Jogador {
     public void setCor(String cor) {
         this.cor = cor;
     }
-    
+
     public Peca getUltimaPecaClicada() {
         return ultimaPecaClicada;
     }
-    
+
     private void setUltimaPecaClicada(Peca peca) {
-        if(this.ultimaPecaClicada != null) {
+        if (this.ultimaPecaClicada != null) {
             this.ultimaPecaClicada.deselecionaPeca();
         }
         this.ultimaPecaClicada = peca;
         this.ultimaPecaClicada.selecionaPeca();
     }
-    
+
     public boolean isSentidoSubindo() {
         return sentidoSubindo;
     }
@@ -118,7 +122,7 @@ public class Jogador {
     }
 
     //Mesmo método que já existia porém rodando para todas as pecas.
-    public boolean existePecaSobMouse(Point mousePosition) {
+    public boolean existePecaDoJogadorSobMouse(Point mousePosition) {
         for (Peca p : pecas) {
 
             if ((mousePosition.getX() >= p.getPosition().x)
@@ -126,7 +130,7 @@ public class Jogador {
                     && (mousePosition.getY() >= p.getPosition().y)
                     && (mousePosition.getY() <= p.getPosition().y + p.getHeight())) {
                 System.out.println("Peca " + p.getId() + " Selecionada");
-                setUltimaPecaClicada(p);                
+                setUltimaPecaClicada(p);
                 return true;
             }
         }
@@ -138,4 +142,13 @@ public class Jogador {
             p.draw();
         }
     }
+
+    public boolean isJogadorDaVez() {
+        return jogadorDaVez;
+    }
+
+    public void setJogadorDaVez(boolean jogadorDaVez) {
+        this.jogadorDaVez = jogadorDaVez;
+    }
+
 }

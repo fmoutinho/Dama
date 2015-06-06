@@ -10,10 +10,10 @@ import JPlay.Keyboard;
 import JPlay.Mouse;
 import JPlay.Window;
 import java.awt.Point;
-import model.Jogador;
 import model.Partida;
 import model.Peca;
 import util.Regra;
+import util.Constantes;
 
 public class Dama {
 
@@ -23,9 +23,8 @@ public class Dama {
     Mouse mouse;
     Keyboard keyboard;
     Peca pecaSelecionada;
-    final int DESLOCAMENTO_ANDAR = 80;
-    final int DESLOCAMENTO_COMER = 160;
-    
+    Peca pecaASerComida;
+
     public Dama() {
 
         System.out.println("rodando");
@@ -57,7 +56,6 @@ public class Dama {
     private void loop() {
         boolean executando = true;
         boolean esperandoMovimento;
-        Jogador jogadorAdversario = null;
         while (executando) {
 
             esperandoMovimento = true;
@@ -67,9 +65,9 @@ public class Dama {
                 System.out.println("Primeiro Clique");
 
                 //Seleciona a peça que o jogador clicou
-                if (partida.jogadorDaVez().existePecaSobMouse(mouse.getPosition())) {
+                if (partida.jogadorDaVez().existePecaDoJogadorSobMouse(mouse.getPosition())) {
                     pecaSelecionada = partida.jogadorDaVez().getUltimaPecaClicada();
-                    desenha();                    
+                    desenha();
                 }
 
                 //Se houver peça selecionada, espera o movimento
@@ -79,33 +77,24 @@ public class Dama {
                     while (esperandoMovimento) {
 
                         if (mouse.isLeftButtonPressed() == true) {
-                            
+
                             //Se, em vez de fazer o movimento, decidiu escolher outra peça
-                            
-                            if (partida.jogadorDaVez().existePecaSobMouse(mouse.getPosition())) {                              
+                            if (partida.jogadorDaVez().existePecaDoJogadorSobMouse(mouse.getPosition())) {
                                 pecaSelecionada = partida.jogadorDaVez().getUltimaPecaClicada();
                                 desenha();
-                            
-                            //Se não selecionou outra peça, então verifica se pode andar                                    
-                            } else 
-                                if ("Vermelho".equals(partida.jogadorDaVez().getCor())) {
-                                    jogadorAdversario = partida.getJogadorAzul();
-                                }
-                                else {
-                                    jogadorAdversario = partida.getJogadorVermelho();
-                                }
-                                if (Regra.podeAndar(pecaSelecionada, mouse.getPosition(), jogadorAdversario.getPecas())) {
-                                    System.out.println("A peca " + pecaSelecionada.getId() + " andou");
-                                    pecaSelecionada.movimentar(mouse.getPosition(), DESLOCAMENTO_ANDAR);
-                                    desenha();
-                                    pecaSelecionada = null;
-                                    partida.trocaDeTurno();
-                                    System.out.println("Vez do jogador " + partida.jogadorDaVez().getCor());
-                                    
+                                //Se não selecionou outra peça, então verifica se pode andar                                    
+                            } else if (pecaSelecionada != null) {
+                                if (Regra.podeAndar(pecaSelecionada, mouse.getPosition(),
+                                        partida.getJogadorAdversario().getPecas(), partida.jogadorDaVez().getPecas()) && !existePecaSobMouse(mouse.getPosition())) {
+
+                                    movimentar(mouse.getPosition(), Constantes.DESLOCAMENTO_ANDAR, esperandoMovimento);
+
+                                    trocaDeTurno();
+
                                 } else {
-                                System.out.println("A peca " + pecaSelecionada.getId() + " nao pode andar");
+                                    System.out.println("A peca " + pecaSelecionada.getId() + " nao pode andar");
                                 }
-                            esperandoMovimento = false;
+                            }
                         }
                     }
                 } else {
@@ -119,25 +108,55 @@ public class Dama {
         }
     }
 
-    /*private boolean existePecaSobMouse(Point position) {
+    private boolean existePecaSobMouse(Point position) {
 
-     if ((position.getX() >= pecaTeste.getPosition().x)
-     && (position.getX() <= pecaTeste.getPosition().x + pecaTeste.getWidth())
-     && (position.getY() >= pecaTeste.getPosition().y)
-     && (position.getY() <= pecaTeste.getPosition().y + pecaTeste.getHeight())) {
-     System.out.println("Tem peça");
-     return true;
+        for (Peca p : partida.getJogadorAzul().getPecas()) {
 
-     }
+            if ((position.getX() >= p.getPosition().x)
+                    && (position.getX() <= p.getPosition().x + p.getWidth())
+                    && (position.getY() >= p.getPosition().y)
+                    && (position.getY() <= p.getPosition().y + p.getHeight())) {
+                System.out.println("Peca " + p.getId() + " Selecionada");
 
-     System.out.println("Nao tem peça");
-     return false;
+                return true;
+            }
+        }
 
-     }*/
+        for (Peca p : partida.getJogadorVermelho().getPecas()) {
+
+            if ((position.getX() >= p.getPosition().x)
+                    && (position.getX() <= p.getPosition().x + p.getWidth())
+                    && (position.getY() >= p.getPosition().y)
+                    && (position.getY() <= p.getPosition().y + p.getHeight())) {
+                System.out.println("Peca " + p.getId() + " Selecionada");
+
+                return true;
+            }
+        }
+        return false;
+
+    }
+
     private void desenha() {
         imagemFundo.draw();
         partida.desenhaPecasJogadores();
         window.display();
+    }
+
+    private void trocaDeTurno() {
+        partida.trocaDeTurno();
+        System.out.println("Vez do jogador " + partida.jogadorDaVez().getCor());
+
+    }
+
+    private void movimentar(Point position, int DESLOCAMENTO_ANDAR, boolean esperandoMovimento) {
+
+        pecaSelecionada.movimentar(position, DESLOCAMENTO_ANDAR);
+        desenha();
+        System.out.println("A peca " + pecaSelecionada.getId() + " andou");
+        pecaSelecionada = null;
+        esperandoMovimento = false;
+
     }
 
 }

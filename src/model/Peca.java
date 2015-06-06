@@ -7,6 +7,7 @@ package model;
 
 import JPlay.Sprite;
 import java.awt.Point;
+import util.Constantes;
 
 /**
  *
@@ -52,7 +53,7 @@ public class Peca {
                     this.spritePeca.x = this.spritePeca.x + DESLOCAMENTO;
                     this.deselecionaPeca();
                 }
-                if (this.spritePeca.y == 568) { //Casa que ele vira dama
+                if (this.spritePeca.y == Constantes.Y_DAMA_DESCENDO) { //Casa que ele vira dama
                     viraDama();
                 }
             } else {
@@ -64,7 +65,7 @@ public class Peca {
                     this.spritePeca.x = this.spritePeca.x + DESLOCAMENTO;
                     this.deselecionaPeca();
                 }
-                if (this.spritePeca.y == 8) {
+                if (this.spritePeca.y == Constantes.Y_DAMA_SUBINDO) {
                     viraDama();
                 }
             }
@@ -127,5 +128,14 @@ public class Peca {
         } else {
             this.spritePeca.setCurrFrame(0);
         }
+    }
+
+    @Override // Mais condições podem ser necessárias
+    public boolean equals(Object obj) {
+        Peca peca = (Peca) obj;
+        if (this.getPosition() == peca.getPosition()) {
+            return true;
+        }
+        return false;
     }
 }
