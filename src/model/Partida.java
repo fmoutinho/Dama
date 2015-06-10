@@ -30,7 +30,7 @@ public class Partida {
         return jogadorVermelho;
     }
 
-    public Jogador jogadorDaVez() {
+    public Jogador getJogadorDaVez() {
         if (this.vezPlayer1) {
             return this.jogadorVermelho;
         } else {

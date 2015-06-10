@@ -70,6 +70,19 @@ public class Peca {
                 }
             }
         }
+
+    }
+
+    public void movimentar(Point p) {
+
+        movimentar(p, Constantes.DESLOCAMENTO_ANDAR);
+
+    }
+
+    public void movimentarAoComer(Point p) {
+
+        movimentar(p, Constantes.DESLOCAMENTO_COMER);
+
     }
 
     private void viraDama() {
@@ -137,5 +150,14 @@ public class Peca {
             return true;
         }
         return false;
+    }
+
+    public void comer(Peca pecaASerComida) {
+        int x = (int) pecaASerComida.getPosition().x;
+        int y = (int) pecaASerComida.getPosition().y;
+        Point p = new Point(x, y);
+
+        movimentarAoComer(p);
+
     }
 }

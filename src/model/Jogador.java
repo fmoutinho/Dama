@@ -5,8 +5,12 @@
  */
 package model;
 
-import java.awt.Point;
+
+
+
+import java.util.ArrayList;
 import util.Constantes;
+
 
 /**
  *
@@ -14,8 +18,9 @@ import util.Constantes;
  */
 public class Jogador {
 
-    private Peca ultimaPecaClicada;
-    private Peca[] pecas = new Peca[12];
+
+    private ArrayList<Peca> pecas = new ArrayList<>(12);
+
     private boolean sentidoSubindo;
     private String cor;
     private boolean jogadorDaVez;
@@ -41,18 +46,6 @@ public class Jogador {
         this.cor = cor;
     }
 
-    public Peca getUltimaPecaClicada() {
-        return ultimaPecaClicada;
-    }
-
-    private void setUltimaPecaClicada(Peca peca) {
-        if (this.ultimaPecaClicada != null) {
-            this.ultimaPecaClicada.deselecionaPeca();
-        }
-        this.ultimaPecaClicada = peca;
-        this.ultimaPecaClicada.selecionaPeca();
-    }
-
     public boolean isSentidoSubindo() {
         return sentidoSubindo;
     }
@@ -61,11 +54,11 @@ public class Jogador {
         this.sentidoSubindo = sentidoSubindo;
     }
 
-    public Peca[] getPecas() {
+    public ArrayList<Peca> getPecas() {
         return pecas;
     }
 
-    public void setPecas(Peca[] pecas) {
+    public void setPecas(ArrayList<Peca> pecas) {
         this.pecas = pecas;
     }
 
@@ -90,7 +83,7 @@ public class Jogador {
 
                     imagemPeca = "peca_vermelha.png";
                     Peca novaPeca = new Peca(x, y, this.sentidoSubindo, imagemPeca);
-                    this.pecas[lenght] = novaPeca;
+                    this.pecas.add(lenght, novaPeca);
                     lenght++;
 
                     x += 2 * Constantes.DESLOCAMENTO_ANDAR;
@@ -112,7 +105,7 @@ public class Jogador {
                 for (int j = 1; j <= 4; j++) {
                     imagemPeca = "peca_azul.png";
                     Peca novaPeca = new Peca(x, y, this.sentidoSubindo, imagemPeca);
-                    this.pecas[lenght] = novaPeca;
+                    this.pecas.add(lenght, novaPeca);
                     lenght++;
 
                     x += 2 * Constantes.DESLOCAMENTO_ANDAR;
@@ -122,21 +115,7 @@ public class Jogador {
         }
     }
 
-    //Mesmo método que já existia porém rodando para todas as pecas.
-    public boolean existePecaDoJogadorSobMouse(Point mousePosition) {
-        for (Peca p : pecas) {
 
-            if ((mousePosition.getX() >= p.getPosition().x)
-                    && (mousePosition.getX() <= p.getPosition().x + p.getWidth())
-                    && (mousePosition.getY() >= p.getPosition().y)
-                    && (mousePosition.getY() <= p.getPosition().y + p.getHeight())) {
-                System.out.println("Peca " + p.getId() + " Selecionada");
-                setUltimaPecaClicada(p);
-                return true;
-            }
-        }
-        return false;
-    }
 
     public void desenhaPecas() {
         for (Peca p : pecas) {

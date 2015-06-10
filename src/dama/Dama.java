@@ -10,6 +10,7 @@ import JPlay.Keyboard;
 import JPlay.Mouse;
 import JPlay.Window;
 import java.awt.Point;
+import java.util.ArrayList;
 import model.Partida;
 import model.Peca;
 import util.Regra;
@@ -22,6 +23,7 @@ public class Dama {
     GameImage imagemFundo;
     Mouse mouse;
     Keyboard keyboard;
+
     Peca pecaSelecionada;
     Peca pecaASerComida;
 
@@ -65,8 +67,10 @@ public class Dama {
                 System.out.println("Primeiro Clique");
 
                 //Seleciona a peça que o jogador clicou
-                if (partida.jogadorDaVez().existePecaDoJogadorSobMouse(mouse.getPosition())) {
-                    pecaSelecionada = partida.jogadorDaVez().getUltimaPecaClicada();
+                if (existePecaDoJogadorSobMouse(mouse.getPosition(), partida.getJogadorDaVez().getPecas())) {
+
+                    selecionaPeca(retornaPecaSelecionada(mouse.getPosition(), partida.getJogadorDaVez().getPecas()));
+
                     desenha();
                 }
 
@@ -79,18 +83,29 @@ public class Dama {
                         if (mouse.isLeftButtonPressed() == true) {
 
                             //Se, em vez de fazer o movimento, decidiu escolher outra peça
-                            if (partida.jogadorDaVez().existePecaDoJogadorSobMouse(mouse.getPosition())) {
-                                pecaSelecionada = partida.jogadorDaVez().getUltimaPecaClicada();
+                            if (existePecaDoJogadorSobMouse(mouse.getPosition(), partida.getJogadorDaVez().getPecas())) {
+
+                                selecionaPeca(retornaPecaSelecionada(mouse.getPosition(), partida.getJogadorDaVez().getPecas()));
                                 desenha();
                                 //Se não selecionou outra peça, então verifica se pode andar                                    
                             } else if (pecaSelecionada != null) {
-                                if (Regra.podeAndar(pecaSelecionada, mouse.getPosition(),
-                                        partida.getJogadorAdversario().getPecas(), partida.jogadorDaVez().getPecas()) && !existePecaSobMouse(mouse.getPosition())) {
+                                if (!Regra.deveComer(partida.getJogadorAdversario().getPecas(), partida.getJogadorDaVez().getPecas())
+                                        && Regra.podeAndar(pecaSelecionada, mouse.getPosition())
+                                        && !existePecaSobMouse(mouse.getPosition(), true)) {
 
-                                    movimentar(mouse.getPosition(), Constantes.DESLOCAMENTO_ANDAR, esperandoMovimento);
+                                    movimentar(mouse.getPosition());
+                                    trocaDeTurno(esperandoMovimento);
 
-                                    trocaDeTurno();
+                                } else if (existePecaDoJogadorSobMouse(mouse.getPosition(), partida.getJogadorAdversario().getPecas())) {
+                                    pecaASerComida = retornaPecaSelecionada(mouse.getPosition(), partida.getJogadorAdversario().getPecas());
 
+                                    if (Regra.podeComer(pecaSelecionada, pecaASerComida,
+                                            partida.getJogadorAdversario().getPecas(), partida.getJogadorDaVez().getPecas())) {
+                                        comer();
+                                        if (!Regra.deveComer(partida.getJogadorAdversario().getPecas(), partida.getJogadorDaVez().getPecas())) {
+                                            trocaDeTurno(esperandoMovimento);
+                                        }
+                                    }
                                 } else {
                                     System.out.println("A peca " + pecaSelecionada.getId() + " nao pode andar");
                                 }
@@ -108,32 +123,14 @@ public class Dama {
         }
     }
 
-    private boolean existePecaSobMouse(Point position) {
+    private boolean existePecaSobMouse(Point position, boolean verificandoTodasAsPecas) {
 
-        for (Peca p : partida.getJogadorAzul().getPecas()) {
-
-            if ((position.getX() >= p.getPosition().x)
-                    && (position.getX() <= p.getPosition().x + p.getWidth())
-                    && (position.getY() >= p.getPosition().y)
-                    && (position.getY() <= p.getPosition().y + p.getHeight())) {
-                System.out.println("Peca " + p.getId() + " Selecionada");
-
-                return true;
-            }
+        if (verificandoTodasAsPecas) {
+            return existePecaDoJogadorSobMouse(position, partida.getJogadorDaVez().getPecas())
+                    && existePecaDoJogadorSobMouse(position, partida.getJogadorAdversario().getPecas());
+        } else {
+            return existePecaDoJogadorSobMouse(position, partida.getJogadorAdversario().getPecas());
         }
-
-        for (Peca p : partida.getJogadorVermelho().getPecas()) {
-
-            if ((position.getX() >= p.getPosition().x)
-                    && (position.getX() <= p.getPosition().x + p.getWidth())
-                    && (position.getY() >= p.getPosition().y)
-                    && (position.getY() <= p.getPosition().y + p.getHeight())) {
-                System.out.println("Peca " + p.getId() + " Selecionada");
-
-                return true;
-            }
-        }
-        return false;
 
     }
 
@@ -143,20 +140,72 @@ public class Dama {
         window.display();
     }
 
-    private void trocaDeTurno() {
+    private void trocaDeTurno(boolean esperandoMovimento) {
         partida.trocaDeTurno();
-        System.out.println("Vez do jogador " + partida.jogadorDaVez().getCor());
+        System.out.println("Vez do jogador " + partida.getJogadorDaVez().getCor());
+        esperandoMovimento = false;
+        pecaSelecionada = null;
+        pecaASerComida = null;
 
     }
 
-    private void movimentar(Point position, int DESLOCAMENTO_ANDAR, boolean esperandoMovimento) {
+    private void movimentar(Point position) {
 
-        pecaSelecionada.movimentar(position, DESLOCAMENTO_ANDAR);
+        pecaSelecionada.movimentar(position);
         desenha();
         System.out.println("A peca " + pecaSelecionada.getId() + " andou");
-        pecaSelecionada = null;
-        esperandoMovimento = false;
 
+    }
+
+    private void comer() {
+        pecaSelecionada.comer(pecaASerComida);
+        partida.getJogadorAdversario().getPecas().remove(pecaASerComida);
+        pecaASerComida = null;
+    }
+
+    //Mesmo método que já existia porém rodando para todas as pecas.
+    public boolean existePecaDoJogadorSobMouse(Point mousePosition, ArrayList<Peca> pecas) {
+        for (Peca peca : pecas) {
+
+            if ((mousePosition.getX() >= peca.getPosition().x)
+                    && (mousePosition.getX() <= peca.getPosition().x + peca.getWidth())
+                    && (mousePosition.getY() >= peca.getPosition().y)
+                    && (mousePosition.getY() <= peca.getPosition().y + peca.getHeight())) {
+                System.out.println("Peca " + peca.getId() + " Selecionada");
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Peca retornaPecaSelecionada(Point mousePosition, ArrayList<Peca> pecas) {
+        Peca pecaRetorno = null;
+        for (Peca peca : pecas) {
+
+            if ((mousePosition.getX() >= peca.getPosition().x)
+                    && (mousePosition.getX() <= peca.getPosition().x + peca.getWidth())
+                    && (mousePosition.getY() >= peca.getPosition().y)
+                    && (mousePosition.getY() <= peca.getPosition().y + peca.getHeight())) {
+
+                System.out.println("Peca " + peca.getId() + " Selecionada");
+                pecaRetorno = peca;
+                return pecaRetorno;
+            }
+
+        }
+        return null;
+    }
+
+    private void selecionaPeca(Peca retornaPecaSelecionada) {
+        if (pecaSelecionada == null) {
+            pecaSelecionada = retornaPecaSelecionada;
+            pecaSelecionada.selecionaPeca();
+        } else {
+            pecaSelecionada.deselecionaPeca();
+            pecaSelecionada = retornaPecaSelecionada;
+            pecaSelecionada.selecionaPeca();
+        }
     }
 
 }
