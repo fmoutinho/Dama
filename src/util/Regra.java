@@ -52,7 +52,26 @@ public class Regra {
     }
 
     private static boolean damaPodeAndar(Peca pecaSelecionada, Point position) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (((pecaSelecionada.getPosition().x + 72 <= position.x
+                        && position.x <= pecaSelecionada.getPosition().x + 152
+                        && pecaSelecionada.getPosition().y + 72 <= position.y
+                        && position.y <= pecaSelecionada.getPosition().y + 152)
+                        || (pecaSelecionada.getPosition().x - 88 <= position.x
+                        && position.x <= pecaSelecionada.getPosition().x - 8
+                        && pecaSelecionada.getPosition().y + 72 <= position.y
+                        && position.y <= pecaSelecionada.getPosition().y + 152))
+                ||
+                ((pecaSelecionada.getPosition().x - 88 <= position.x
+                        && position.x <= pecaSelecionada.getPosition().x - 8
+                        && pecaSelecionada.getPosition().y - 88 <= position.y
+                        && position.y <= pecaSelecionada.getPosition().y - 8)
+                        || (pecaSelecionada.getPosition().y - 88 <= position.y
+                        && position.y <= pecaSelecionada.getPosition().y - 8
+                        && pecaSelecionada.getPosition().x + 72 <= position.x
+                        && position.x <= pecaSelecionada.getPosition().x + 152))) {
+            return true;
+        }
+        return false;
     }
 
     public static boolean podeComer(Peca pecaSelecionada, Peca pecaASerComida, ArrayList<Peca> pecas, ArrayList<Peca> pecas0) {

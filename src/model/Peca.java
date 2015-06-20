@@ -43,46 +43,47 @@ public class Peca {
     }
 
     public void movimentar(Point p, int DESLOCAMENTO) {
-        if (!dama) {
-            if (!sentidoSubindo) {
-                this.spritePeca.y = this.spritePeca.y + DESLOCAMENTO;
-                if (p.x < spritePeca.x) {
-                    this.spritePeca.x = this.spritePeca.x - DESLOCAMENTO;
-                    this.deselecionaPeca();
-                } else {
-                    this.spritePeca.x = this.spritePeca.x + DESLOCAMENTO;
-                    this.deselecionaPeca();
-                }
-                if (this.spritePeca.y == Constantes.Y_INICIAL_SUBINDO) { //Casa que ele vira dama
-                    viraDama();
-                }
+        boolean sentido = !dama ? this.sentidoSubindo : p.y < this.spritePeca.y;
+        if (!sentido) {
+            double y = this.spritePeca.y + DESLOCAMENTO;
+            double x;
+            if (p.x < spritePeca.x) {
+                x = this.spritePeca.x - DESLOCAMENTO;
             } else {
-                this.spritePeca.y = this.spritePeca.y - DESLOCAMENTO;
-                if (p.x < spritePeca.x) {
-                    this.spritePeca.x = this.spritePeca.x - DESLOCAMENTO;
-                    this.deselecionaPeca();
-                } else {
-                    this.spritePeca.x = this.spritePeca.x + DESLOCAMENTO;
-                    this.deselecionaPeca();
-                }
-                if (this.spritePeca.y == Constantes.Y_INICIAL_DESCENDO) {
-                    viraDama();
-                }
+                x = this.spritePeca.x + DESLOCAMENTO;
+            }
+            this.spritePeca.x = x;
+            this.spritePeca.y = y;
+            this.deselecionaPeca();
+
+            if (!this.dama && this.spritePeca.y == Constantes.Y_INICIAL_SUBINDO) { //Casa que ele vira dama
+                viraDama();
+            }
+        } else {
+            double y = this.spritePeca.y - DESLOCAMENTO;
+            double x;
+            if (p.x < spritePeca.x) {
+                x = this.spritePeca.x - DESLOCAMENTO;
+            } else {
+                x = this.spritePeca.x + DESLOCAMENTO;
+            }
+            this.spritePeca.x = x;
+            this.spritePeca.y = y;
+            this.deselecionaPeca();
+
+            if (!this.dama && this.spritePeca.y == Constantes.Y_INICIAL_DESCENDO) {
+                viraDama();
             }
         }
 
     }
 
     public void movimentar(Point p) {
-
         movimentar(p, Constantes.DESLOCAMENTO_ANDAR);
-
     }
 
     public void movimentarAoComer(Point p) {
-
         movimentar(p, Constantes.DESLOCAMENTO_COMER);
-
     }
 
     private void viraDama() {
@@ -92,7 +93,6 @@ public class Peca {
 
     public JPlay.Point getPosition() {
         return this.spritePeca.getPosition();
-
     }
 
     public int getWidth() {
@@ -158,6 +158,5 @@ public class Peca {
         Point p = new Point(x, y);
 
         movimentarAoComer(p);
-
     }
 }
