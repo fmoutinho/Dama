@@ -24,10 +24,18 @@ public class Regra {
             return false;
         } else {
             if(casaPeca.getPeca().getSentidoSubindo()) {
-                return casaPeca.getPosicaoI() == casaClicada.getPosicaoI() - 1
-                        && Math.abs(casaPeca.getPosicaoJ() - casaClicada.getPosicaoJ()) == 1;
+                System.out.println("peca selecionadaI" + casaPeca.getPosicaoI());
+                System.out.println("peca selecionadaJ" + casaPeca.getPosicaoJ());
+                                
+                System.out.println("casa clicada I" + casaClicada.getPosicaoI());
+                System.out.println("casa clicada J" + casaClicada.getPosicaoJ());
+                System.out.println("Subindo direita");
+                return (casaPeca.getPosicaoI() == casaClicada.getPosicaoI() + 1
+                      && casaClicada.getPosicaoJ() - casaPeca.getPosicaoJ() == 1)
+                      || (casaPeca.getPosicaoI() == casaClicada.getPosicaoI() + 1
+                      && Math.abs(casaClicada.getPosicaoJ() - casaPeca.getPosicaoJ()) == 1);
             } else {
-                return casaPeca.getPosicaoI() == casaClicada.getPosicaoI() + 1
+                return casaPeca.getPosicaoI() == casaClicada.getPosicaoI() - 1
                         && Math.abs(casaPeca.getPosicaoJ() - casaClicada.getPosicaoJ()) == 1;
             }
         }
