@@ -31,6 +31,7 @@ public class Regra {
                         && position.x <= pecaSelecionada.getPosition().x - 8
                         && pecaSelecionada.getPosition().y + 72 <= position.y
                         && position.y <= pecaSelecionada.getPosition().y + 152))) {
+                    //Teste Ramo
                     return true;
 
                 }
