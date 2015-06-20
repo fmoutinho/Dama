@@ -1,7 +1,7 @@
 package model;
 
-public class TabuleiroLuis {
-    public TabuleiroLuis() {
+public class Tabuleiro {
+    public Tabuleiro() {
         Casa[][] casa = new Casa[8][8];
         int contador = 1;
         for(int x = 0; x < 8; x++ ) {

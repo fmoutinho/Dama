@@ -59,7 +59,7 @@ public class Regra {
                         || (pecaSelecionada.getPosition().x - 88 <= position.x
                         && position.x <= pecaSelecionada.getPosition().x - 8
                         && pecaSelecionada.getPosition().y + 72 <= position.y
-                        && position.y <= pecaSelecionada.getPosition().y + 152))
+                        && position.y <= pecaSelecionada.getPosition().y + 152)) //Caso a dama estiver subindo
                 ||
                 ((pecaSelecionada.getPosition().x - 88 <= position.x
                         && position.x <= pecaSelecionada.getPosition().x - 8
@@ -68,7 +68,7 @@ public class Regra {
                         || (pecaSelecionada.getPosition().y - 88 <= position.y
                         && position.y <= pecaSelecionada.getPosition().y - 8
                         && pecaSelecionada.getPosition().x + 72 <= position.x
-                        && position.x <= pecaSelecionada.getPosition().x + 152))) {
+                        && position.x <= pecaSelecionada.getPosition().x + 152))) { //Caso a dama estiver descendo
             return true;
         }
         return false;
