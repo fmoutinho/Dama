@@ -17,6 +17,7 @@ public class Constantes {
     public static final int Y_INICIAL_SUBINDO = 568;    
     public static final int X_INICIAL_SUBINDO = 8;
     public static final int X_INICIAL_DESCENDO = 8;
+    public static final int DIMENSAO_TABULEIRO = 8;
     public static final String COR_VERMELHO = "Vermelho";
     
 }

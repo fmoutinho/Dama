@@ -1,20 +1,38 @@
 package model;
 
-import JPlay.GameImage;
+import java.awt.Point;
 
 public class Casa {
-    GameImage imagem;
-    public Casa (String imagem) {
-        this.imagem = new GameImage (imagem);
+
+    public Casa(Point point) {
+        this.point = point;
     }
-    private int numero;
-    
-    public int getNumero() {
-        return this.numero;
+
+    private int posicaoI;
+    private int posicaoJ;
+    private Point point;
+
+    public Point getPoint() {
+        return point;
     }
-    
-    public void setNumero(int numero) {
-        this.numero = numero;
+
+    public void setPoint(Point point) {
+        this.point = point;
+    }
+
+    public int getPosicaoI() {
+        return posicaoI;
+    }
+
+    public void setPosicaoI(int posicaoI) {
+        this.posicaoI = posicaoI;
+    }
+
+    public int getPosicaoJ() {
+        return posicaoJ;
+    }
+
+    public void setPosicaoJ(int posicaoJ) {
+        this.posicaoJ = posicaoJ;
     }
 }
-
