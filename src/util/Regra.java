@@ -7,6 +7,7 @@ package util;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import model.Casa;
 
 import model.Peca;
 
@@ -16,63 +17,25 @@ import model.Peca;
  */
 public class Regra {
 
-    public static boolean podeAndar(Peca pecaSelecionada, Point position) {
+    public static boolean podeAndar(Casa casaPeca, Casa casaClicada) {
 
-        if (pecaSelecionada.isDama()) {
-            return damaPodeAndar(pecaSelecionada, position);
-
-        } else {
-            if (!pecaSelecionada.getSentidoSubindo()) { //Descendo a direita || Descendo a esquerda
-                if (((pecaSelecionada.getPosition().x + 72 <= position.x
-                        && position.x <= pecaSelecionada.getPosition().x + 152
-                        && pecaSelecionada.getPosition().y + 72 <= position.y
-                        && position.y <= pecaSelecionada.getPosition().y + 152)
-                        || (pecaSelecionada.getPosition().x - 88 <= position.x
-                        && position.x <= pecaSelecionada.getPosition().x - 8
-                        && pecaSelecionada.getPosition().y + 72 <= position.y
-                        && position.y <= pecaSelecionada.getPosition().y + 152))) {
-                    //Teste Ramo haushduahsudh
-                    return true;
-
-                }
-            } else {//Subindo a esquerda || Subindo a direita
-                if (((pecaSelecionada.getPosition().x - 88 <= position.x
-                        && position.x <= pecaSelecionada.getPosition().x - 8
-                        && pecaSelecionada.getPosition().y - 88 <= position.y
-                        && position.y <= pecaSelecionada.getPosition().y - 8)
-                        || (pecaSelecionada.getPosition().y - 88 <= position.y
-                        && position.y <= pecaSelecionada.getPosition().y - 8
-                        && pecaSelecionada.getPosition().x + 72 <= position.x
-                        && position.x <= pecaSelecionada.getPosition().x + 152))) {
-
-                    return true;
-                }
-            }
+        if (casaPeca.getPeca().isDama()) {
+            //return damaPodeAndar(pecaSelecionada, position);
             return false;
+        } else {
+            if(casaPeca.getPeca().getSentidoSubindo()) {
+                return casaPeca.getPosicaoI() == casaClicada.getPosicaoI() - 1
+                        && Math.abs(casaPeca.getPosicaoJ() - casaClicada.getPosicaoJ()) == 1;
+            } else {
+                return casaPeca.getPosicaoI() == casaClicada.getPosicaoI() + 1
+                        && Math.abs(casaPeca.getPosicaoJ() - casaClicada.getPosicaoJ()) == 1;
+            }
         }
     }
 
-    private static boolean damaPodeAndar(Peca pecaSelecionada, Point position) {
-        if (((pecaSelecionada.getPosition().x + 72 <= position.x
-                        && position.x <= pecaSelecionada.getPosition().x + 152
-                        && pecaSelecionada.getPosition().y + 72 <= position.y
-                        && position.y <= pecaSelecionada.getPosition().y + 152)
-                        || (pecaSelecionada.getPosition().x - 88 <= position.x
-                        && position.x <= pecaSelecionada.getPosition().x - 8
-                        && pecaSelecionada.getPosition().y + 72 <= position.y
-                        && position.y <= pecaSelecionada.getPosition().y + 152)) //Caso a dama estiver subindo
-                ||
-                ((pecaSelecionada.getPosition().x - 88 <= position.x
-                        && position.x <= pecaSelecionada.getPosition().x - 8
-                        && pecaSelecionada.getPosition().y - 88 <= position.y
-                        && position.y <= pecaSelecionada.getPosition().y - 8)
-                        || (pecaSelecionada.getPosition().y - 88 <= position.y
-                        && position.y <= pecaSelecionada.getPosition().y - 8
-                        && pecaSelecionada.getPosition().x + 72 <= position.x
-                        && position.x <= pecaSelecionada.getPosition().x + 152))) { //Caso a dama estiver descendo
-            return true;
-        }
-        return false;
+    private static boolean damaPodeAndar(Casa casaPeca, Casa casaClicada) {
+        return Math.abs(casaPeca.getPosicaoI() - casaClicada.getPosicaoI()) == 1
+                && Math.abs(casaPeca.getPosicaoJ() - casaClicada.getPosicaoJ()) == 1;
     }
 
     public static boolean podeComer(Peca pecaSelecionada, Peca pecaASerComida, ArrayList<Peca> pecas, ArrayList<Peca> pecas0) {
