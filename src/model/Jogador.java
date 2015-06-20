@@ -73,7 +73,7 @@ public class Jogador {
                 for (int j = jInicial; j < Constantes.DIMENSAO_TABULEIRO; j += 2) {
                     imagemPeca = "peca_azul.png";
                     Point p = tab.getMapa()[i][j].getPoint();
-                    Peca novaPeca = new Peca(p.x, p.y, !this.sentidoSubindo, imagemPeca);
+                    Peca novaPeca = new Peca(p.x, p.y, false, imagemPeca);
                     this.pecas.add(lenght, novaPeca);
                     lenght++;
 
@@ -90,7 +90,7 @@ public class Jogador {
                 for (int j = jInicial; j < Constantes.DIMENSAO_TABULEIRO; j = j + 2) {
                     imagemPeca = "peca_vermelha.png";
                     Point p = tab.getMapa()[i][j].getPoint();
-                    Peca novaPeca = new Peca(p.x, p.y, this.sentidoSubindo, imagemPeca);
+                    Peca novaPeca = new Peca(p.x, p.y, true, imagemPeca);
                     this.pecas.add(lenght, novaPeca);
                     lenght++;
 

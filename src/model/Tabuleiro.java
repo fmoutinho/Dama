@@ -37,6 +37,7 @@ public class Tabuleiro {
                         && p.x <= (mapa[i][j].getPoint().x + (Constantes.DESLOCAMENTO_ANDAR - 1))
                         && p.y >= mapa[i][j].getPoint().y
                         && p.y <= (mapa[i][j].getPoint().y + (Constantes.DESLOCAMENTO_ANDAR - 1))) {
+                    System.out.println("Casa (" + i + ", " + j + ") selecionada.");
                     return mapa[i][j];
                 }
             }

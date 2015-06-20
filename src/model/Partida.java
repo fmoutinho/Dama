@@ -32,8 +32,10 @@ public class Partida {
 
     public Jogador getJogadorDaVez() {
         if (this.vezPlayer1) {
+            System.out.println("Retornando jogador vermelho.");
             return this.jogadorVermelho;
         } else {
+            System.out.println("Retornando jogador azul.");
             return this.jogadorAzul;
         }
     }
@@ -65,5 +67,4 @@ public class Partida {
     public void setJogadorAdversario(Jogador jogadorAdversario) {
         this.jogadorAdversario = jogadorAdversario;
     }
-
 }

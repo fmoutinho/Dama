@@ -65,8 +65,6 @@ public class Dama {
         boolean executando = true;
         boolean esperandoMovimento;
         while (executando) {
-
-            esperandoMovimento = true;
             desenha();
 
             if (mouse.isLeftButtonPressed() == true) {
@@ -74,11 +72,11 @@ public class Dama {
 
                 casaSelecionada = tabuleiro.getCasaTabuleiro(mouse.getPosition());
 
-                if (casaSelecionada.getPeca() != null) {
-
+                if (casaSelecionada != null && casaSelecionada.getPeca() != null) {
+                    
                     if (partida.getJogadorDaVez().isSentidoSubindo() == casaSelecionada.getPeca().getSentidoSubindo()) {
                         casaSelecionada.getPeca().selecionaPeca();
-
+                        esperandoMovimento = true;
                         desenha();
 
                         System.out.println("Fazer o movimento de andar");
@@ -89,10 +87,12 @@ public class Dama {
 
                                 Casa casaClicada = tabuleiro.getCasaTabuleiro(mouse.getPosition());
 
-                                if (casaClicada.getPeca() != null) {
+                                if (casaClicada != null && casaClicada.getPeca() != null) {
 
-                                    if (partida.getJogadorDaVez().isSentidoSubindo() == casaSelecionada.getPeca().getSentidoSubindo()) {
+                                    if (partida.getJogadorDaVez().isSentidoSubindo() == casaClicada.getPeca().getSentidoSubindo()) {
+                                        casaSelecionada.getPeca().deselecionaPeca();
                                         casaSelecionada = casaClicada;
+                                        casaSelecionada.getPeca().selecionaPeca();
                                     }
 
                                 } else if (Regra.podeAndar(casaSelecionada, casaClicada)) {
@@ -101,7 +101,7 @@ public class Dama {
                                     desenha();
                                     tabuleiro.trocaCasa(casaSelecionada, casaClicada);
                                     trocaDeTurno(esperandoMovimento);
-
+                                    esperandoMovimento = false;
                                 } else {
                                     System.out.println("A peca " + casaSelecionada.getPeca().getId() + " nao pode andar");
                                 }
@@ -109,8 +109,6 @@ public class Dama {
                         }
                     }
                 }
-            } else {
-                System.out.println("Nenhuma peca selecionada");
             }
         }
         if (keyboard.keyDown(Keyboard.ESCAPE_KEY)
@@ -140,9 +138,8 @@ public class Dama {
         partida.trocaDeTurno();
         System.out.println("Vez do jogador " + partida.getJogadorDaVez().getCor());
         esperandoMovimento = false;
-        pecaSelecionada = null;
+        casaSelecionada = null;
         pecaASerComida = null;
-
     }
 
     private void movimentar(Point position) {
