@@ -91,17 +91,18 @@ public class Dama {
 
                                     if (partida.getJogadorDaVez().isSentidoSubindo() == casaClicada.getPeca().getSentidoSubindo()) {
                                         casaSelecionada.getPeca().deselecionaPeca();
-                                        casaSelecionada = casaClicada;
-                                        casaSelecionada.getPeca().selecionaPeca();
+                                        casaClicada.getPeca().selecionaPeca();
+                                        casaSelecionada = casaClicada;     
+                                        desenha();
                                     }
 
                                 } else if (Regra.podeAndar(casaSelecionada, casaClicada)) {
                                     System.out.println("Pode andar");
-                                    casaSelecionada.getPeca().movimentar(casaClicada);
-                                    desenha();
+                                    casaSelecionada.getPeca().movimentar(casaClicada);                                    
                                     tabuleiro.trocaCasa(casaSelecionada, casaClicada);
                                     trocaDeTurno(esperandoMovimento);
                                     esperandoMovimento = false;
+                                    desenha();
                                 } else {
                                     System.out.println("A peca " + casaSelecionada.getPeca().getId() + " nao pode andar");
                                 }

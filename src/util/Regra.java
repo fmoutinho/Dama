@@ -20,15 +20,12 @@ public class Regra {
     public static boolean podeAndar(Casa casaPeca, Casa casaClicada) {
 
         if (casaPeca.getPeca().isDama()) {
-            //return damaPodeAndar(pecaSelecionada, position);
-            return false;
+            return damaPodeAndar(casaPeca, casaClicada);
         } else {
             if(casaPeca.getPeca().getSentidoSubindo()) {
-                System.out.println("peca selecionadaI" + casaPeca.getPosicaoI());
-                System.out.println("peca selecionadaJ" + casaPeca.getPosicaoJ());
+                System.out.println("Peca selecionada (" + casaPeca.getPosicaoI() + ", " + casaPeca.getPosicaoJ() + ")");
                                 
-                System.out.println("casa clicada I" + casaClicada.getPosicaoI());
-                System.out.println("casa clicada J" + casaClicada.getPosicaoJ());
+                System.out.println("casa clicada (" + casaPeca.getPosicaoI() + ", " + casaPeca.getPosicaoJ() + ")");
                 System.out.println("Subindo direita");
                 return (casaPeca.getPosicaoI() == casaClicada.getPosicaoI() + 1
                       && casaClicada.getPosicaoJ() - casaPeca.getPosicaoJ() == 1)

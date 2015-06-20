@@ -49,11 +49,11 @@ public class Peca {
         this.deselecionaPeca();
 
         if (!this.dama && this.sentidoSubindo) {
-            if (this.spritePeca.y == Constantes.Y_INICIAL_SUBINDO) { //Casa que ele vira dama
+            if (this.spritePeca.y == Constantes.Y_INICIAL_DESCENDO) { //Casa que ele vira dama
                 viraDama();
             }
         } else if (!this.dama && !this.sentidoSubindo) {
-            if (this.spritePeca.y == Constantes.Y_INICIAL_DESCENDO) {
+            if (this.spritePeca.y == Constantes.Y_INICIAL_SUBINDO) {
                 viraDama();
             }
         }
