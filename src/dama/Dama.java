@@ -102,7 +102,7 @@ public class Dama {
                                     if (Regra.podeComer(pecaSelecionada, pecaASerComida,
                                             partida.getJogadorAdversario().getPecas(), partida.getJogadorDaVez().getPecas())) {
                                         comer();
-                                        if (!Regra.deveComer(partida.getJogadorAdversario().getPecas(), partida.getJogadorDaVez().getPecas())) {
+                                        if (!Regra.deveComer(pecaSelecionada, partida.getJogadorDaVez().getPecas(), partida.getJogadorAdversario().getPecas())) {
                                             trocaDeTurno(esperandoMovimento);
                                         }
                                     }

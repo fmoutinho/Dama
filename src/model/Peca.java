@@ -16,7 +16,7 @@ import util.Constantes;
 public class Peca {
 
     private Sprite spritePeca;
-    private boolean sentidoSubindo;
+    private boolean subindo;
     private boolean dama;
     private int id;
     static private int contador;
@@ -32,7 +32,7 @@ public class Peca {
     public Peca(double eixoXini, double eixoYini, boolean sentidoSubindo, String imagemFundo) {
         this.spritePeca = new Sprite(imagemFundo, 4);
         this.spritePeca.setPosition(eixoXini, eixoYini);
-        this.sentidoSubindo = sentidoSubindo;
+        this.subindo = sentidoSubindo;
         this.spritePeca.setCurrFrame(0);
         Peca.contador += 1;
         this.id = Peca.contador;
@@ -43,7 +43,7 @@ public class Peca {
     }
 
     public void movimentar(Point p, int DESLOCAMENTO) {
-        boolean sentido = !dama ? this.sentidoSubindo : p.y < this.spritePeca.y;
+        boolean sentido = !dama ? this.subindo : p.y < this.spritePeca.y;
         if (!sentido) {
             double y = this.spritePeca.y + DESLOCAMENTO;
             double x;
@@ -112,11 +112,11 @@ public class Peca {
     }
 
     public boolean getSentidoSubindo() {
-        return sentidoSubindo;
+        return subindo;
     }
 
     public void setSentidoSubindo(boolean sentido) {
-        this.sentidoSubindo = sentido;
+        this.subindo = sentido;
     }
 
     public boolean isDama() {
