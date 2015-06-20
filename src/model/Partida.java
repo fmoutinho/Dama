@@ -43,9 +43,8 @@ public class Partida {
             jogadorVermelho.setJogadorDaVez(false);
             jogadorAzul.setJogadorDaVez(true);
             jogadorAdversario = jogadorVermelho;
-        }
+        }else{
 
-        if (jogadorAzul.isJogadorDaVez()) {
             jogadorAzul.setJogadorDaVez(false);
             jogadorVermelho.setJogadorDaVez(true);
             jogadorAdversario = jogadorAzul;
