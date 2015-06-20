@@ -11,6 +11,15 @@ public class Casa {
     private int posicaoI;
     private int posicaoJ;
     private Point point;
+    private Peca peca;
+
+    public Peca getPeca() {
+        return peca;
+    }
+
+    public void setPeca(Peca peca) {
+        this.peca = peca;
+    }
 
     public Point getPoint() {
         return point;

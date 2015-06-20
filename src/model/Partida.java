@@ -16,9 +16,9 @@ public class Partida {
     private Jogador jogadorAdversario;
     private boolean vezPlayer1 = true;
 
-    public Partida() {
-        this.jogadorVermelho = new Jogador(true);
-        this.jogadorAzul = new Jogador(false);
+    public Partida(Tabuleiro tab) {
+        this.jogadorVermelho = new Jogador(true, tab);
+        this.jogadorAzul = new Jogador(false, tab);
         this.jogadorAdversario = jogadorAzul;
     }
 

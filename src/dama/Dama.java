@@ -11,8 +11,10 @@ import JPlay.Mouse;
 import JPlay.Window;
 import java.awt.Point;
 import java.util.ArrayList;
+import model.Casa;
 import model.Partida;
 import model.Peca;
+import model.Tabuleiro;
 import util.Regra;
 import util.Constantes;
 
@@ -23,9 +25,11 @@ public class Dama {
     GameImage imagemFundo;
     Mouse mouse;
     Keyboard keyboard;
+    Tabuleiro tabuleiro;
 
     Peca pecaSelecionada;
     Peca pecaASerComida;
+    Casa casaSelecionada;
 
     public Dama() {
 
@@ -39,7 +43,8 @@ public class Dama {
         //A windows SEMPRE deve ser a primeira a ser CARREGADA
         window = new Window(640, 640);
         mouse = window.getMouse();
-        partida = new Partida();
+        tabuleiro = new Tabuleiro();
+        partida = new Partida(tabuleiro);
         keyboard = window.getKeyboard();
         imagemFundo = new GameImage("tabuleiro.jpg");
     }
@@ -50,6 +55,7 @@ public class Dama {
         partida = null;
         keyboard = null;
         imagemFundo = null;
+        tabuleiro = null;
 
         //Fecha a janela de jogo
         window.exit();
@@ -66,60 +72,49 @@ public class Dama {
             if (mouse.isLeftButtonPressed() == true) {
                 System.out.println("Primeiro Clique");
 
-                //Seleciona a peça que o jogador clicou
-                if (existePecaDoJogadorSobMouse(mouse.getPosition(), partida.getJogadorDaVez().getPecas())) {
+                casaSelecionada = tabuleiro.getCasaTabuleiro(mouse.getPosition());
 
-                    selecionaPeca(retornaPecaSelecionada(mouse.getPosition(), partida.getJogadorDaVez().getPecas()));
+                if (casaSelecionada.getPeca() != null) {
 
-                    desenha();
-                }
+                    if (partida.getJogadorDaVez().isSentidoSubindo() == casaSelecionada.getPeca().getSentidoSubindo()) {
+                        casaSelecionada.getPeca().selecionaPeca();
 
-                //Se houver peça selecionada, espera o movimento
-                if (pecaSelecionada != null) {
-                    System.out.println("Fazer o movimento de andar");
+                        desenha();
 
-                    while (esperandoMovimento) {
+                        System.out.println("Fazer o movimento de andar");
 
-                        if (mouse.isLeftButtonPressed() == true) {
+                        while (esperandoMovimento) {
 
-                            //Se, em vez de fazer o movimento, decidiu escolher outra peça
-                            if (existePecaDoJogadorSobMouse(mouse.getPosition(), partida.getJogadorDaVez().getPecas())) {
+                            if (mouse.isLeftButtonPressed() == true) {
 
-                                selecionaPeca(retornaPecaSelecionada(mouse.getPosition(), partida.getJogadorDaVez().getPecas()));
-                                desenha();
-                                //Se não selecionou outra peça, então verifica se pode andar                                    
-                            } else if (pecaSelecionada != null) {
-                                if (!Regra.deveComer(partida.getJogadorAdversario().getPecas(), partida.getJogadorDaVez().getPecas())
-                                        && Regra.podeAndar(pecaSelecionada, mouse.getPosition())
-                                        && !existePecaSobMouse(mouse.getPosition(), true)) {
+                                Casa casaClicada = tabuleiro.getCasaTabuleiro(mouse.getPosition());
 
-                                    movimentar(mouse.getPosition());
-                                    trocaDeTurno(esperandoMovimento);
+                                if (casaClicada.getPeca() != null) {
 
-                                } else if (existePecaDoJogadorSobMouse(mouse.getPosition(), partida.getJogadorAdversario().getPecas())) {
-                                    pecaASerComida = retornaPecaSelecionada(mouse.getPosition(), partida.getJogadorAdversario().getPecas());
-
-                                    if (Regra.podeComer(pecaSelecionada, pecaASerComida,
-                                            partida.getJogadorAdversario().getPecas(), partida.getJogadorDaVez().getPecas())) {
-                                        comer();
-                                        if (!Regra.deveComer(partida.getJogadorAdversario().getPecas(), partida.getJogadorDaVez().getPecas())) {
-                                            trocaDeTurno(esperandoMovimento);
-                                        }
+                                    if (partida.getJogadorDaVez().isSentidoSubindo() == casaSelecionada.getPeca().getSentidoSubindo()) {
+                                        casaSelecionada = casaClicada;
                                     }
+
+                                } else if (Regra.podeAndar(casaSelecionada, casaClicada)) {
+
+                                    casaSelecionada.getPeca().movimentar(casaClicada);
+                                    tabuleiro.trocaCasa(casaSelecionada, casaClicada);
+                                    partida.trocaDeTurno();
+                                   
                                 } else {
                                     System.out.println("A peca " + pecaSelecionada.getId() + " nao pode andar");
                                 }
                             }
                         }
                     }
-                } else {
-                    System.out.println("Nenhuma peca selecionada");
                 }
+            } else {
+                System.out.println("Nenhuma peca selecionada");
             }
-
-            if (keyboard.keyDown(Keyboard.ESCAPE_KEY) == true) {
-                executando = false;
-            }
+        }
+        if (keyboard.keyDown(Keyboard.ESCAPE_KEY)
+                == true) {
+            executando = false;
         }
     }
 

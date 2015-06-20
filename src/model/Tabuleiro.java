@@ -5,7 +5,7 @@ import util.Constantes;
 
 public class Tabuleiro {
 
-    Casa[][] mapa = new Casa[Constantes.DIMENSAO_TABULEIRO][Constantes.DIMENSAO_TABULEIRO];
+    private Casa[][] mapa = new Casa[Constantes.DIMENSAO_TABULEIRO][Constantes.DIMENSAO_TABULEIRO];
 
     public Tabuleiro() {
         int y = Constantes.Y_INICIAL_DESCENDO;
@@ -29,12 +29,26 @@ public class Tabuleiro {
     public Casa getCasaTabuleiro(int i, int j) {
         return this.mapa[i][j];
     }
-    
+
     public Casa getCasaTabuleiro(Point p) {
-        for(int i = 0; 1 < Constantes.DIMENSAO_TABULEIRO; i++) {
-            for(int j = 0; j < Constantes.DIMENSAO_TABULEIRO; j++) {
-                
+        for (int i = 0; 1 < Constantes.DIMENSAO_TABULEIRO; i++) {
+            for (int j = 0; j < Constantes.DIMENSAO_TABULEIRO; j++) {
+                if (p.x >= mapa[i][j].getPoint().x
+                        && p.x <= (mapa[i][j].getPoint().x + (Constantes.DESLOCAMENTO_ANDAR - 1))
+                        && p.y >= mapa[i][j].getPoint().y
+                        && p.y <= (mapa[i][j].getPoint().y + (Constantes.DESLOCAMENTO_ANDAR - 1))) {
+                    return mapa[i][j];
+                }
             }
         }
+    }
+    
+    public void trocaCasa(Casa casaAtual, Casa casaFutura) {
+        casaFutura.setPeca(casaAtual.getPeca());
+        casaAtual.setPeca(null);        
+    }
+    
+    public Casa[][] getMapa() {
+        return mapa;
     }
 }

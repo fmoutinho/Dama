@@ -42,6 +42,23 @@ public class Peca {
         this.spritePeca.draw();
     }
 
+    public void movimentar(Casa casaClicada) {
+        Point p = casaClicada.getPoint();
+        this.spritePeca.x = p.x;
+        this.spritePeca.y = p.y;
+        this.deselecionaPeca();
+
+        if (!this.dama && this.sentidoSubindo) {
+            if (this.spritePeca.y == Constantes.Y_INICIAL_SUBINDO) { //Casa que ele vira dama
+                viraDama();
+            }
+        } else if (!this.dama && !this.sentidoSubindo) {
+            if (this.spritePeca.y == Constantes.Y_INICIAL_DESCENDO) {
+                viraDama();
+            }
+        }
+    }
+
     public void movimentar(Point p, int DESLOCAMENTO) {
         boolean sentido = !dama ? this.sentidoSubindo : p.y < this.spritePeca.y;
         if (!sentido) {

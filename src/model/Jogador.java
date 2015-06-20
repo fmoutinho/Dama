@@ -5,12 +5,9 @@
  */
 package model;
 
-
-
-
+import java.awt.Point;
 import java.util.ArrayList;
 import util.Constantes;
-
 
 /**
  *
@@ -18,14 +15,13 @@ import util.Constantes;
  */
 public class Jogador {
 
-
     private ArrayList<Peca> pecas = new ArrayList<>(12);
 
     private boolean sentidoSubindo;
     private String cor;
     private boolean jogadorDaVez;
 
-    public Jogador(boolean sentidoSubindo) {
+    public Jogador(boolean sentidoSubindo, Tabuleiro tab) {
         this.sentidoSubindo = sentidoSubindo;
         if (sentidoSubindo) {
             this.cor = "Vermelho";
@@ -35,7 +31,7 @@ public class Jogador {
             this.jogadorDaVez = sentidoSubindo;
 
         }
-        InstanciaPecas();
+        InstanciaPecas(tab);
     }
 
     public String getCor() {
@@ -62,60 +58,47 @@ public class Jogador {
         this.pecas = pecas;
     }
 
-    private void InstanciaPecas() {
-        int x;
-        int y;
+    private void InstanciaPecas(Tabuleiro tab) {
         String imagemPeca;
         int lenght = 0;
+        int jInicial;
 
-        if (this.sentidoSubindo) {
-            y = Constantes.Y_INICIAL_SUBINDO;
+        if (!this.sentidoSubindo) {
+            //roda para preencher o i
+            for (int i = 0; i < 3; i++) {
 
-            //roda apenas 3 vezes para preencher o x
-            for (int i = 1; i <= 3; i++) {
-                x = Constantes.X_INICIAL_SUBINDO;
+                jInicial = (i == 0) || (i == 2) ? 1 : 0;
 
-                if (i == 2) {
-                    x += 80;
-                }
-                //roda apenas 4 vezes para preencher o y
-                for (int j = 1; j <= 4; j++) {
-
-                    imagemPeca = "peca_vermelha.png";
-                    Peca novaPeca = new Peca(x, y, this.sentidoSubindo, imagemPeca);
+                //roda para preencher o j
+                for (int j = jInicial; j < Constantes.DIMENSAO_TABULEIRO; j += 2) {
+                    imagemPeca = "peca_azul.png";
+                    Point p = tab.getMapa()[i][j].getPoint();
+                    Peca novaPeca = new Peca(p.x, p.y, !this.sentidoSubindo, imagemPeca);
                     this.pecas.add(lenght, novaPeca);
                     lenght++;
 
-                    x += 2 * Constantes.DESLOCAMENTO_ANDAR;
+                    tab.getMapa()[i][j].setPeca(novaPeca);
                 }
-                y -= Constantes.DESLOCAMENTO_ANDAR;
             }
         } else {
-            y = Constantes.Y_INICIAL_DESCENDO;
+            //roda para preencher o i
+            for (int i = Constantes.DIMENSAO_TABULEIRO - 1; i >= Constantes.DIMENSAO_TABULEIRO - 3; i--) {
 
-            //roda apenas 3 vezes para preencher o x
-            for (int i = 1; i <= 3; i++) {
-                x = Constantes.X_INICIAL_DESCENDO;
+                jInicial = (i % 2) == 0 ? 1 : 0;
 
-                if (i == 1 || i == 3) {
-                    x += Constantes.DESLOCAMENTO_ANDAR;
-                }
-
-                //roda apenas 4 vezes para preencher o y
-                for (int j = 1; j <= 4; j++) {
-                    imagemPeca = "peca_azul.png";
-                    Peca novaPeca = new Peca(x, y, this.sentidoSubindo, imagemPeca);
+                //roda pra preencher o j
+                for (int j = jInicial; j < Constantes.DIMENSAO_TABULEIRO; j = j + 2) {
+                    imagemPeca = "peca_vermelha.png";
+                    Point p = tab.getMapa()[i][j].getPoint();
+                    Peca novaPeca = new Peca(p.x, p.y, this.sentidoSubindo, imagemPeca);
                     this.pecas.add(lenght, novaPeca);
                     lenght++;
 
-                    x += 2 * Constantes.DESLOCAMENTO_ANDAR;
+                    tab.getMapa()[i][j].setPeca(novaPeca);
                 }
-                y += Constantes.DESLOCAMENTO_ANDAR;
             }
         }
     }
-
-
 
     public void desenhaPecas() {
         for (Peca p : pecas) {
