@@ -44,13 +44,24 @@ public class Regra {
                 && Math.abs(casaPeca.getPosicaoJ() - casaClicada.getPosicaoJ()) == 1;
     }
 
-    private static boolean damaPodeComer(Casa casaPeca, Casa casaClicada) {
+    private static boolean damaPodeComer(Casa casaPeca, Casa casaClicada, Tabuleiro tab) {
+        if (Math.abs(casaPeca.getPosicaoI() - casaClicada.getPosicaoI()) == 2
+                && Math.abs(casaPeca.getPosicaoJ() - casaClicada.getPosicaoJ()) == 2) {
+            
+            Casa casaComida = Regra.getCasaComida(casaPeca, casaClicada, tab);
+            
+            if(casaComida.getPeca() == null) {
+                return false;
+            } else {
+                return casaComida.getPeca().isSentidoSubindo() != casaPeca.getPeca().isSentidoSubindo();
+            }
+        }
         return false;
     }
 
     public static boolean podeComer(Casa casaPeca, Casa casaClicada, Tabuleiro tab) {
         if (casaPeca.getPeca().isDama()) {
-            return damaPodeComer(casaPeca, casaClicada);
+            return damaPodeComer(casaPeca, casaClicada, tab);
         } else {
             if (casaPeca.getPeca().isSentidoSubindo()) {
                 if ((casaPeca.getPosicaoI() == casaClicada.getPosicaoI() + 2)
@@ -84,23 +95,22 @@ public class Regra {
     }
 
     public static Casa getCasaComida(Casa casaPeca, Casa casaClicada, Tabuleiro tab) {
+        int i;
         if (casaPeca.getPeca().isDama()) {
-            return null;
+            i = casaClicada.getPosicaoI() > casaPeca.getPosicaoI()
+                    ? casaPeca.getPosicaoI() + 1 : casaPeca.getPosicaoI() - 1;
         } else {
             if (casaPeca.getPeca().isSentidoSubindo()) {
-                int i = casaPeca.getPosicaoI() - 1;
-                int j = casaClicada.getPosicaoJ() > casaPeca.getPosicaoJ()
-                        ? casaPeca.getPosicaoJ() + 1 : casaPeca.getPosicaoJ() - 1;
-
-                return tab.getCasaTabuleiro(i, j);
+                i = casaPeca.getPosicaoI() - 1;
             } else {
-                int i = casaPeca.getPosicaoI() + 1;
-                int j = casaClicada.getPosicaoJ() > casaPeca.getPosicaoJ()
-                        ? casaPeca.getPosicaoJ() + 1 : casaPeca.getPosicaoJ() - 1;
-
-                return tab.getCasaTabuleiro(i, j);
+                i = casaPeca.getPosicaoI() + 1;
             }
         }
+
+        int j = casaClicada.getPosicaoJ() > casaPeca.getPosicaoJ()
+                ? casaPeca.getPosicaoJ() + 1 : casaPeca.getPosicaoJ() - 1;
+
+        return tab.getCasaTabuleiro(i, j);
     }
 
     public static boolean deveComer(ArrayList<Peca> pecas, ArrayList<Peca> pecas0) {
