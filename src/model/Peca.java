@@ -128,7 +128,7 @@ public class Peca {
         this.spritePeca = spritePeca;
     }
 
-    public boolean getSentidoSubindo() {
+    public boolean isSentidoSubindo() {
         return sentidoSubindo;
     }
 
@@ -176,4 +176,5 @@ public class Peca {
 
         movimentarAoComer(p);
     }
+    
 }

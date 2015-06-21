@@ -49,6 +49,10 @@ public class Tabuleiro {
         casaAtual.setPeca(null);        
     }
     
+    public void mataPeca(Casa casaPeca) {
+        casaPeca.setPeca(null);
+    }
+    
     public Casa[][] getMapa() {
         return mapa;
     }

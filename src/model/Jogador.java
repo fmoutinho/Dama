@@ -102,7 +102,9 @@ public class Jogador {
 
     public void desenhaPecas() {
         for (Peca p : pecas) {
-            p.draw();
+            if (p != null) {
+                p.draw();
+            }
         }
     }
 
@@ -112,6 +114,17 @@ public class Jogador {
 
     public void setJogadorDaVez(boolean jogadorDaVez) {
         this.jogadorDaVez = jogadorDaVez;
+    }
+
+    public void mataPeca(Peca p) {
+        for (Peca peca : pecas) {
+            if (peca != null) {
+                if (peca.equals(p)) {
+                    peca.setSpritePeca(null);
+                    peca = null;
+                }
+            }
+        }
     }
 
 }

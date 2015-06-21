@@ -74,7 +74,7 @@ public class Dama {
 
                 if (casaSelecionada != null && casaSelecionada.getPeca() != null) {
                     
-                    if (partida.getJogadorDaVez().isSentidoSubindo() == casaSelecionada.getPeca().getSentidoSubindo()) {
+                    if (partida.getJogadorDaVez().isSentidoSubindo() == casaSelecionada.getPeca().isSentidoSubindo()) {
                         casaSelecionada.getPeca().selecionaPeca();
                         esperandoMovimento = true;
                         desenha();
@@ -89,14 +89,23 @@ public class Dama {
 
                                 if (casaClicada != null && casaClicada.getPeca() != null) {
 
-                                    if (partida.getJogadorDaVez().isSentidoSubindo() == casaClicada.getPeca().getSentidoSubindo()) {
+                                    if (partida.getJogadorDaVez().isSentidoSubindo() == casaClicada.getPeca().isSentidoSubindo()) {
                                         casaSelecionada.getPeca().deselecionaPeca();
                                         casaClicada.getPeca().selecionaPeca();
                                         casaSelecionada = casaClicada;     
                                         desenha();
                                     }
+                                    
+                                } else if(Regra.podeComer(casaSelecionada, casaClicada, tabuleiro)) {
+                                    System.out.println("Pode comer");
+                                    Casa casaPecaComida = Regra.getCasaComida(casaSelecionada, casaClicada, tabuleiro);
+                                    partida.getJogadorAdversario().mataPeca(casaPecaComida.getPeca());
+                                    casaSelecionada.getPeca().movimentar(casaClicada);
+                                    desenha();                     
+                                    trocaDeTurno(esperandoMovimento);
+                                    esperandoMovimento = false;
 
-                                } else if (Regra.podeAndar(casaSelecionada, casaClicada)) {
+                            } else if (Regra.podeAndar(casaSelecionada, casaClicada)) {
                                     System.out.println("Pode andar");
                                     casaSelecionada.getPeca().movimentar(casaClicada);                                    
                                     tabuleiro.trocaCasa(casaSelecionada, casaClicada);
