@@ -102,7 +102,11 @@ public class Dama {
                                     partida.getJogadorAdversario().mataPeca(casaPecaComida.getPeca(), partida.getJogadorAdversario().getPecas());
                                     casaSelecionada.getPeca().movimentar(casaClicada);
                                     casaPecaComida.setPeca(null);
+                                    casaClicada.setPeca(casaSelecionada.getPeca());
+                                    casaSelecionada.setPeca(null);
+                                    
                                     desenha();                     
+                                    
                                     trocaDeTurno(esperandoMovimento);
                                     esperandoMovimento = false;
 
