@@ -7,6 +7,7 @@ package model;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 import util.Constantes;
 
 /**
@@ -15,7 +16,7 @@ import util.Constantes;
  */
 public class Jogador {
 
-    private ArrayList<Peca> pecas = new ArrayList<>(12);
+    private ArrayList<Peca> pecas = new ArrayList<Peca>(12);
 
     private boolean sentidoSubindo;
     private String cor;
@@ -116,15 +117,20 @@ public class Jogador {
         this.jogadorDaVez = jogadorDaVez;
     }
 
-    public void mataPeca(Peca p) {
-        for (Peca peca : pecas) {
-            if (peca != null) {
-                if (peca.equals(p)) {
-                    peca.setSpritePeca(null);
-                    peca = null;
-                }
+    public void mataPeca(Peca p, ArrayList<Peca> pecas) {
+        
+        System.out.println("eu sou" + p);
+        for (Peca peca : pecas ) {
+            if(peca.equals(p)) {
+                peca.setSpritePeca(null);
+                pecas.remove(peca);
+                peca = null;
+                break;
             }
+            
         }
+       
+        
     }
 
 }

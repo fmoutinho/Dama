@@ -88,7 +88,7 @@ public class Dama {
                                 Casa casaClicada = tabuleiro.getCasaTabuleiro(mouse.getPosition());
 
                                 if (casaClicada != null && casaClicada.getPeca() != null) {
-
+                                    System.out.println(casaClicada.getPeca());
                                     if (partida.getJogadorDaVez().isSentidoSubindo() == casaClicada.getPeca().isSentidoSubindo()) {
                                         casaSelecionada.getPeca().deselecionaPeca();
                                         casaClicada.getPeca().selecionaPeca();
@@ -99,8 +99,9 @@ public class Dama {
                                 } else if(Regra.podeComer(casaSelecionada, casaClicada, tabuleiro)) {
                                     System.out.println("Pode comer");
                                     Casa casaPecaComida = Regra.getCasaComida(casaSelecionada, casaClicada, tabuleiro);
-                                    partida.getJogadorAdversario().mataPeca(casaPecaComida.getPeca());
+                                    partida.getJogadorAdversario().mataPeca(casaPecaComida.getPeca(), partida.getJogadorAdversario().getPecas());
                                     casaSelecionada.getPeca().movimentar(casaClicada);
+                                    casaPecaComida.setPeca(null);
                                     desenha();                     
                                     trocaDeTurno(esperandoMovimento);
                                     esperandoMovimento = false;
@@ -130,10 +131,10 @@ public class Dama {
     private boolean existePecaSobMouse(Point position, boolean verificandoTodasAsPecas) {
 
         if (verificandoTodasAsPecas) {
-            return existePecaDoJogadorSobMouse(position, partida.getJogadorDaVez().getPecas())
-                    && existePecaDoJogadorSobMouse(position, partida.getJogadorAdversario().getPecas());
+            return existePecaDoJogadorSobMouse(position, (ArrayList<Peca>) partida.getJogadorDaVez().getPecas())
+                    && existePecaDoJogadorSobMouse(position, (ArrayList<Peca>) partida.getJogadorAdversario().getPecas());
         } else {
-            return existePecaDoJogadorSobMouse(position, partida.getJogadorAdversario().getPecas());
+            return existePecaDoJogadorSobMouse(position, (ArrayList<Peca>) partida.getJogadorAdversario().getPecas());
         }
 
     }

@@ -163,7 +163,7 @@ public class Peca {
     @Override // Mais condições podem ser necessárias
     public boolean equals(Object obj) {
         Peca peca = (Peca) obj;
-        if (this.getPosition() == peca.getPosition()) {
+        if (this.id == peca.id) {
             return true;
         }
         return false;
