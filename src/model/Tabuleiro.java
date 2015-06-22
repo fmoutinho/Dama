@@ -27,7 +27,10 @@ public class Tabuleiro {
     }
 
     public Casa getCasaTabuleiro(int i, int j) {
-        return this.mapa[i][j];
+        if (i >= 0 && j >= 0 && i < Constantes.DIMENSAO_TABULEIRO && j < Constantes.DIMENSAO_TABULEIRO) {
+            return this.mapa[i][j];
+        }
+        return null;
     }
 
     public Casa getCasaTabuleiro(Point p) {
@@ -37,22 +40,21 @@ public class Tabuleiro {
                         && p.x <= (mapa[i][j].getPoint().x + (Constantes.DESLOCAMENTO_ANDAR - 1))
                         && p.y >= mapa[i][j].getPoint().y
                         && p.y <= (mapa[i][j].getPoint().y + (Constantes.DESLOCAMENTO_ANDAR - 1))) {
-                    System.out.println("Casa (" + i + ", " + j + ") selecionada.");
                     return mapa[i][j];
                 }
             }
         }
     }
-    
+
     public void trocaCasa(Casa casaAtual, Casa casaFutura) {
         casaFutura.setPeca(casaAtual.getPeca());
-        casaAtual.setPeca(null);        
+        casaAtual.setPeca(null);
     }
-    
+
     public void mataPeca(Casa casaPeca) {
         casaPeca.setPeca(null);
     }
-    
+
     public Casa[][] getMapa() {
         return mapa;
     }

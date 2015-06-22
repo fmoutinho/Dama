@@ -67,13 +67,89 @@ public class Dama {
         while (executando) {
             desenha();
 
+            boolean deveComer = Regra.deveComer(partida.getJogadorDaVez().getPecas(), tabuleiro);
+            if (deveComer) {
+                System.out.println("Deve Comer!");
+                loopComer(deveComer);
+            } else {
+                System.out.println("Não deve Comer!");
+                loopAndar();
+            }
+
+            if (keyboard.keyDown(Keyboard.ESCAPE_KEY)
+                    == true) {
+                executando = false;
+            }
+        }
+    }
+
+    private void loopComer(boolean deveComer) {
+        boolean esperandoMovimento = false;
+
+        while (deveComer) {
+            if (mouse.isLeftButtonPressed() == true) {
+                casaSelecionada = tabuleiro.getCasaTabuleiro(mouse.getPosition());
+
+                if (casaSelecionada != null && casaSelecionada.temPeca()) {
+
+                    if (partida.getJogadorDaVez().isSentidoSubindo() == casaSelecionada.getPeca().isSentidoSubindo()) {
+                        casaSelecionada.getPeca().selecionaPeca();
+                        esperandoMovimento = true;
+                        desenha();
+                    }
+
+                    while (esperandoMovimento) {
+
+                        if (mouse.isLeftButtonPressed() == true) {
+
+                            Casa casaClicada = tabuleiro.getCasaTabuleiro(mouse.getPosition());
+
+                            if (casaClicada != null && casaClicada.temPeca()) {
+                                System.out.println(casaClicada.getPeca());
+                                if (partida.getJogadorDaVez().isSentidoSubindo() == casaClicada.getPeca().isSentidoSubindo()) {
+                                    casaSelecionada.getPeca().deselecionaPeca();
+                                    casaClicada.getPeca().selecionaPeca();
+                                    casaSelecionada = casaClicada;
+                                    desenha();
+                                }
+                            } else if (Regra.podeComer(casaSelecionada, casaClicada, tabuleiro)) {
+                                if (Regra.podeComer(casaSelecionada, casaClicada, tabuleiro)) {
+                                    System.out.println("Pode comer");
+                                    Casa casaPecaComida = Regra.getCasaComida(casaSelecionada, casaClicada, tabuleiro);
+                                    partida.getJogadorAdversario().mataPeca(casaPecaComida.getPeca(), partida.getJogadorAdversario().getPecas());
+                                    casaSelecionada.getPeca().movimentar(casaClicada);
+                                    casaPecaComida.setPeca(null);
+                                    casaClicada.setPeca(casaSelecionada.getPeca());
+                                    casaSelecionada.setPeca(null);
+
+                                    desenha();
+                                    esperandoMovimento = false;
+                                    deveComer = Regra.aindaDeveComer(casaClicada, tabuleiro);
+                                }
+
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+        trocaDeTurno();
+    }
+
+    private void loopAndar() {
+        boolean esperandoMovimento;
+        boolean naoFezMovimento = true;
+
+        while (naoFezMovimento) {
+
             if (mouse.isLeftButtonPressed() == true) {
                 System.out.println("Primeiro Clique");
 
                 casaSelecionada = tabuleiro.getCasaTabuleiro(mouse.getPosition());
 
-                if (casaSelecionada != null && casaSelecionada.getPeca() != null) {
-                    
+                if (casaSelecionada != null && casaSelecionada.temPeca()) {
+
                     if (partida.getJogadorDaVez().isSentidoSubindo() == casaSelecionada.getPeca().isSentidoSubindo()) {
                         casaSelecionada.getPeca().selecionaPeca();
                         esperandoMovimento = true;
@@ -87,48 +163,32 @@ public class Dama {
 
                                 Casa casaClicada = tabuleiro.getCasaTabuleiro(mouse.getPosition());
 
-                                if (casaClicada != null && casaClicada.getPeca() != null) {
+                                if (casaClicada != null && casaClicada.temPeca()) {
                                     System.out.println(casaClicada.getPeca());
                                     if (partida.getJogadorDaVez().isSentidoSubindo() == casaClicada.getPeca().isSentidoSubindo()) {
                                         casaSelecionada.getPeca().deselecionaPeca();
                                         casaClicada.getPeca().selecionaPeca();
-                                        casaSelecionada = casaClicada;     
+                                        casaSelecionada = casaClicada;
                                         desenha();
                                     }
-                                    
-                                } else if(Regra.podeComer(casaSelecionada, casaClicada, tabuleiro)) {
-                                    System.out.println("Pode comer");
-                                    Casa casaPecaComida = Regra.getCasaComida(casaSelecionada, casaClicada, tabuleiro);
-                                    partida.getJogadorAdversario().mataPeca(casaPecaComida.getPeca(), partida.getJogadorAdversario().getPecas());
-                                    casaSelecionada.getPeca().movimentar(casaClicada);
-                                    casaPecaComida.setPeca(null);
-                                    casaClicada.setPeca(casaSelecionada.getPeca());
-                                    casaSelecionada.setPeca(null);
-                                    
-                                    desenha();                     
-                                    
-                                    trocaDeTurno(esperandoMovimento);
-                                    esperandoMovimento = false;
 
-                            } else if (Regra.podeAndar(casaSelecionada, casaClicada)) {
+                                } else if (Regra.podeAndar(casaSelecionada, casaClicada)) {
                                     System.out.println("Pode andar");
-                                    casaSelecionada.getPeca().movimentar(casaClicada);                                    
+                                    casaSelecionada.getPeca().movimentar(casaClicada);
                                     tabuleiro.trocaCasa(casaSelecionada, casaClicada);
-                                    trocaDeTurno(esperandoMovimento);
+                                    trocaDeTurno();
                                     esperandoMovimento = false;
+                                    naoFezMovimento = false;
                                     desenha();
                                 } else {
                                     System.out.println("A peca " + casaSelecionada.getPeca().getId() + " nao pode andar");
                                 }
+
                             }
                         }
                     }
                 }
             }
-        }
-        if (keyboard.keyDown(Keyboard.ESCAPE_KEY)
-                == true) {
-            executando = false;
         }
     }
 
@@ -149,10 +209,9 @@ public class Dama {
         window.display();
     }
 
-    private void trocaDeTurno(boolean esperandoMovimento) {
+    private void trocaDeTurno() {
         partida.trocaDeTurno();
         System.out.println("Vez do jogador " + partida.getJogadorDaVez().getCor());
-        esperandoMovimento = false;
         casaSelecionada = null;
         pecaASerComida = null;
     }

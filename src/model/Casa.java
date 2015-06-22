@@ -44,4 +44,18 @@ public class Casa {
     public void setPosicaoJ(int posicaoJ) {
         this.posicaoJ = posicaoJ;
     }
+    
+    public boolean temPeca() {
+        if(this.peca != null) {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean temMesmoSentido(Casa casa) {
+        if(casa.temPeca() && this.temPeca()) {
+            return casa.getPeca().isSentidoSubindo() == this.getPeca().isSentidoSubindo();
+        }
+        return false;
+    }
 }
