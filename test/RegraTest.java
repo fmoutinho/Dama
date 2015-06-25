@@ -50,13 +50,11 @@ public class RegraTest {
     }
     
     @Test
-    
     public void podeAndarTest() {
         
         casaSelecionada.setPeca(peca);
         
         casaSelecionada.setPosicaoI(2);
-        
         casaSelecionada.setPosicaoJ(1);
         
         casaDestino.setPosicaoI(3);
@@ -68,6 +66,40 @@ public class RegraTest {
         
     }
     
+    @Test
+    public void naoPodeAndarTest() {
+        
+        casaSelecionada.setPeca(peca);
+        
+        casaSelecionada.setPosicaoI(2);
+        casaSelecionada.setPosicaoJ(1);
+        
+        casaDestino.setPosicaoI(3);
+        casaDestino.setPosicaoJ(1);
+       
+        boolean podeAndar = Regra.podeAndar(casaSelecionada, casaDestino);
+        
+        assertFalse(podeAndar);
+        
+    }
+    
+    @Test
+    public void damaPodeAndarPraTrasTest() {
+        
+        casaSelecionada.setPeca(peca);
+        
+        casaSelecionada.setPosicaoI(2);
+        casaSelecionada.setPosicaoJ(1);
+        
+        casaDestino.setPosicaoI(1);
+        casaDestino.setPosicaoJ(2);
+       
+        boolean podeAndar = Regra.damaPodeAndar(casaSelecionada, casaDestino);
+        
+        assertTrue(podeAndar);
+    }
+            
+            
     
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:

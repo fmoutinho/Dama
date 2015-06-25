@@ -33,12 +33,12 @@ public class Regra {
         }
     }
 
-    private static boolean damaPodeAndar(Casa casaPeca, Casa casaClicada) {
+    public static boolean damaPodeAndar(Casa casaPeca, Casa casaClicada) {
         return Math.abs(casaPeca.getPosicaoI() - casaClicada.getPosicaoI()) == 1
                 && Math.abs(casaPeca.getPosicaoJ() - casaClicada.getPosicaoJ()) == 1;
     }
 
-    private static boolean damaPodeComer(Casa casaPeca, Casa casaClicada, Tabuleiro tab) {
+    public static boolean damaPodeComer(Casa casaPeca, Casa casaClicada, Tabuleiro tab) {
         if (Math.abs(casaPeca.getPosicaoI() - casaClicada.getPosicaoI()) == 2
                 && Math.abs(casaPeca.getPosicaoJ() - casaClicada.getPosicaoJ()) == 2) {
 
